@@ -1,0 +1,77 @@
+Pichhle lesson mein humne Promise.all() seekha tha. Ab 3 aur methods seekhenge jo real-world API calls mein useful hain.
+1. Promise.allSettled() — Sabka result chahiye
+Maan lo 3 API calls hain aur ek fail ho jaati hai. Tum phir bhi baaki sabka result chahte ho.
+const results = await Promise.allSettled([
+  Promise.resolve("Users loaded"),
+  Promise.reject("Products failed"),
+  Promise.resolve("Orders loaded")
+]);
+
+console.log(results);
+
+
+Output ka simplified version:
+[
+  { status: "fulfilled", value: "Users loaded" },
+  { status: "rejected", reason: "Products failed" },
+  { status: "fulfilled", value: "Orders loaded" }
+]
+
+
+Har Promise ka apna result ya error milta hai.
+Use case: Dashboard mein multiple services ka status dikhana, bhale hi koi ek service fail ho jaye.
+2. Promise.race() — Jo pehle settle ho
+Jo Promise sabse pehle successful ho ya fail ho, uska result race() decide karta hai.
+const result = await Promise.race([
+  new Promise<string>(resolve =>
+    setTimeout(() => resolve("API 1"), 1000)
+  ),
+  new Promise<string>(resolve =>
+    setTimeout(() => resolve("API 2"), 500)
+  )
+]);
+
+console.log(result);
+
+
+Output:
+API 2
+
+
+Kyunki API 2 500 milliseconds mein complete hui, jabki API 1 ko 1000 milliseconds lage.
+Important: race() mein pehla settled Promise jeetta hai. Agar sabse pehle reject hua, toh race() bhi reject hoga.
+3. Promise.any() — Pehli successful response
+Maan lo tum ek hi data ke liye multiple servers try kar rahe ho. Tumhe pehli successful response chahiye.
+const result = await Promise.any([
+  Promise.reject("Server 1 failed"),
+  Promise.resolve("Server 2 success"),
+  Promise.resolve("Server 3 success")
+]);
+
+console.log(result);
+
+
+Output:
+Server 2 success
+
+
+Promise.any() errors ko ignore karta hai jab tak koi Promise successfully fulfill na ho. Agar saare reject ho jaayen, toh AggregateError throw hota hai.
+4. Quick comparison
+Method	Kya wait karta hai?	Kab useful hai?
+Promise.all()	Sab successful hon	Sab results required hon
+Promise.allSettled()	Sab settle hon	Har task ka outcome chahiye
+Promise.race()	Pehla settled result	Fastest result ya timeout pattern
+Promise.any()	Pehli successful response	Multiple servers mein fallback
+Practice time 💻
+Is code ko dekho:
+const result = await Promise.any([
+  Promise.reject("A"),
+  Promise.reject("B"),
+  Promise.resolve("C")
+]);
+
+console.log(result);
+
+
+Question 1: Output kya hoga?
+Question 2: Agar teeno Promises reject ho jaayen, toh kya hoga?
