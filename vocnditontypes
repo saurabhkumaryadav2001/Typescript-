@@ -1,0 +1,97 @@
+Lesson 30: Conditional Types in TypeScript 🚀
+Aaj hum seekhenge Conditional Types. Iska use karke TypeScript mein types ke basis par if-else jaisi condition laga sakte hain.
+1. Conditional Type kya hota hai?
+Normal JavaScript mein:
+const age = 20;
+
+if (age >= 18) {
+  console.log("Adult");
+} else {
+  console.log("Minor");
+}
+
+
+TypeScript mein conditional type types ko check karta hai, runtime values ko nahi.
+Iska syntax hai:
+type Result = Condition extends OtherType
+  ? TrueType
+  : FalseType;
+
+
+Yaad rakho:
+- extends → check karta hai ki type doosre type ko satisfy karta hai ya nahi.
+- ? → condition true hone par kaunsa type milega.
+- : → condition false hone par kaunsa type milega.
+2. Simple example
+type Check<T> = T extends string ? "Yes" : "No";
+
+type A = Check<string>;
+type B = Check<number>;
+
+
+Result:
+type A = "Yes";
+type B = "No";
+
+
+Kyun?
+- string extends string → true, isliye "Yes".
+- number extends string → false, isliye "No".
+3. Real-world example
+Maan lo API ko ID number ya string mein mil sakti hai. Hum type ke according result decide karna chahte hain.
+type ApiResult<T> =
+  T extends number ? { id: T } : { value: T };
+
+type NumberResult = ApiResult<number>;
+type StringResult = ApiResult<string>;
+
+
+Result:
+type NumberResult = { id: number };
+type StringResult = { value: string };
+
+
+Yaani input type ke according output type change ho gaya.
+4. Union types ke saath conditional types
+type IsString<T> = T extends string ? true : false;
+
+type Result = IsString<string | number>;
+
+
+Result hoga:
+type Result = true | false;
+
+
+Kyun? Jab conditional type mein T ek naked type parameter hota hai, tab union ke har member par condition alag-alag apply hoti hai:
+- string → true
+- number → false
+Is behavior ko distributive conditional types kehte hain.
+5. infer ka introduction
+infer conditional types ke andar kisi type ka part infer karne ke kaam aata hai.
+Example: Promise ke andar ka result type nikalna.
+type GetPromiseValue<T> =
+  T extends Promise<infer U> ? U : T;
+
+type A = GetPromiseValue<Promise<string>>;
+type B = GetPromiseValue<number>;
+
+
+Result:
+type A = string;
+type B = number;
+
+
+infer U Promise ke andar ka type nikalta hai. TypeScript mein built-in Awaited<T> bhi Promise ke resolved type ko obtain karne ke liye use kiya ja sakta hai.
+Practice time 💻
+Task 1: Check<T> ka result batao.
+type Check<T> = T extends number ? "Number" : "Other";
+
+type A = Check<number>;
+type B = Check<string>;
+type C = Check<boolean>;
+
+
+Task 2: Apne words mein samjhao ki extends aur ? : ka kya role hai.
+
+Check my answers
+Next lesson (31): Template Literal Types — types ke andar strings banana, jaise "getUser", "getProduct" aur "deleteUser".
