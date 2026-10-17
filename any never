@@ -1,0 +1,83 @@
+Lesson 21: any, unknown aur never in TypeScript
+Ye teen types samajhna important hai, kyunki real projects mein inka use hota hai.
+1. any — TypeScript ki checking ko bypass karna
+let value: any = "Hello";
+
+value = 100;
+value = true;
+
+console.log(value);
+
+
+Output:
+true
+
+
+any ka matlab hai ki TypeScript is variable par type restrictions enforce nahi karega.
+let value: any = "Hello";
+
+console.log(value.toFixed(2));
+
+
+Ye code compile ho sakta hai, lekin runtime par error aayega, kyunki string mein toFixed() method nahi hota.
+Rule: any ka unnecessary use avoid karo.
+2. unknown — Value ka type pehle check karo
+let value: unknown = "Hello";
+
+// console.log(value.toUpperCase()); // Error
+
+
+TypeScript direct method call allow nahi karega, kyunki value ka actual type abhi confirm nahi hai.
+Pehle check karo:
+let value: unknown = "Hello";
+
+if (typeof value === "string") {
+  console.log(value.toUpperCase());
+}
+
+
+Output:
+HELLO
+
+
+unknown useful hai jab API, user input ya kisi external source se value milti hai aur uska type pehle se guaranteed nahi hota.
+3. never — Jab koi value possible hi na ho
+never un situations mein use hota hai jahan function normal tareeke se return hi nahi karta, ya koi case logically impossible hai.
+function throwError(message: string): never {
+  throw new Error(message);
+}
+
+
+Ye function error throw karta hai, isliye normal result return nahi karta.
+Ek aur example:
+function checkStatus(status: "success" | "error") {
+  if (status === "success") {
+    console.log("Done");
+  } else if (status === "error") {
+    console.log("Failed");
+  } else {
+    const impossible: never = status;
+  }
+}
+
+
+never yahan help karta hai verify karne mein ki saare possible status cases handle kiye gaye hain.
+Quick comparison
+Type	Meaning	Use
+any	Type checking bypass	Zarurat padne par hi
+unknown	Type pehle verify karo	External input, API data
+never	Impossible value / normal return nahi	Error handling, exhaustive checks
+Yaad rakho: any = bina checking, unknown = checking ke baad use, never = impossible case.
+Practice time 💻
+Is code ko dekho:
+let data: unknown = 100;
+
+if (typeof data === "number") {
+  console.log(data.toFixed(2));
+}
+
+
+Question: Output kya hoga, aur unknown ko direct toFixed() call karne se pehle check kyun karna padta hai?
+
+Check answer
+Next lesson (22): TypeScript mein Enums aur Literal Types — status, roles aur fixed options ko safely represent karna.
