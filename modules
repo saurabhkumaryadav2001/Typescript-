@@ -1,0 +1,98 @@
+Lesson 23: Modules — import aur export in TypeScript 🚀
+Ab tak humne code mostly ek hi file mein likha. Real projects mein code ko alag-alag files mein rakhte hain, taaki project maintain karna easy ho.
+Maan lo tum ek application bana rahe ho. Ek file mein user ka logic, doosri mein calculation aur teesri mein main application ka code hoga.
+1. export kya karta hai?
+math.ts naam ki file banao:
+export function add(a: number, b: number): number {
+  return a + b;
+}
+
+export const PI = 3.14;
+
+
+Yahan export ka matlab hai ki doosri files is function aur constant ko use kar sakti hain.
+2. import kya karta hai?
+Ab main.ts file banao:
+import { add, PI } from "./math";
+
+console.log(add(10, 20));
+console.log(PI);
+
+
+Output:
+30
+3.14
+
+
+math.ts
+Function aur constant export karta hai.
+
+
+import
+
+main.ts
+Export kiye gaye items ko use karta hai.
+
+
+
+3. Default export
+Agar ek file se ek main item export karna ho, toh default export use kar sakte hain.
+user.ts:
+export default class User {
+  constructor(public name: string) {}
+
+  greet(): string {
+    return `Hello, ${this.name}`;
+  }
+}
+
+
+main.ts:
+import User from "./user";
+
+const user = new User("Rahul");
+console.log(user.greet());
+
+
+Output:
+Hello, Rahul
+
+
+Difference yaad rakho:
+- Named export: import { add } from "./math" — curly braces use hote hain.
+- Default export: import User from "./user" — aam taur par curly braces nahi lagte.
+4. Sirf types export karna
+TypeScript mein types ko bhi alag files mein export kar sakte ho.
+types.ts:
+export type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+
+main.ts:
+import type { Product } from "./types";
+
+const item: Product = {
+  id: 1,
+  name: "Laptop",
+  price: 50000
+};
+
+console.log(item.name);
+
+
+import type batata hai ki humein sirf type information chahiye, runtime JavaScript value nahi.
+Note: Project ke tsconfig.json aur module configuration ke hisaab se import paths mein .js extension ya doosre rules ki zarurat ho sakti hai.
+Practice time 💻
+Task: Tumhare paas calculator.ts file hai:
+export function multiply(a: number, b: number): number {
+  return a * b;
+}
+
+
+main.ts mein is function ko import karke 5 * 4 ka result print karne wala code likho.
+
+Check my code
+Next lesson (24): Promise aur async/await — asynchronous code, API calls aur data fetch karna.
