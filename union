@@ -1,0 +1,108 @@
+TypeScript Lesson 11: Union Types & Type Narrowing 🚀
+Aaj hum seekhenge ki ek variable mein multiple types allow kaise karte hain aur TypeScript ko kaise batate hain ki abhi variable mein kaunsa type ka data hai.
+1. Union Type kya hota hai?
+Maan lo ek variable mein kabhi number aur kabhi string store karna hai.
+let data: string | number;
+
+data = 100;       // Valid
+data = "Hello";   // Valid
+
+console.log(data);
+
+
+Yahan | ka matlab hai OR.
+- string | number = string OR number.
+- string | number | boolean = string OR number OR boolean.
+Memory trick: | ko OR samjho.
+2. Union Type ki zaroorat kyun hai?
+Maan lo user ka ID number bhi ho sakta hai aur string bhi.
+let userId: string | number;
+
+userId = 101;
+userId = "USER101";
+
+
+Dono valid hain.
+Lekin ye invalid hoga:
+userId = true; // TypeScript error
+
+
+Kyunki boolean allowed types mein nahi hai.
+3. Type Narrowing kya hai?
+Maan lo variable string | number hai. Ab tum us par string wala method .toUpperCase() use karna chahte ho.
+Direct use karoge to TypeScript error de sakta hai, kyunki variable number bhi ho sakta hai.
+Solution: pehle type check karo.
+function printData(data: string | number): void {
+    if (typeof data === "string") {
+        console.log(data.toUpperCase());
+    } else {
+        console.log(data * 2);
+    }
+}
+
+printData("hello");
+printData(10);
+
+
+Output:
+HELLO
+20
+
+
+Samjho:
+- typeof data === "string" check karta hai ki data string hai ya nahi.
+- if ke andar TypeScript jaanta hai ki data string hai.
+- else ke andar yahan data number hoga.
+Isi ko Type Narrowing kehte hain: possible types ko check karke ek specific type tak narrow karna.
+4. Union Type ke saath conditions
+function showId(id: string | number): void {
+    if (typeof id === "number") {
+        console.log("ID doubled:", id * 2);
+    } else {
+        console.log("ID:", id.toUpperCase());
+    }
+}
+
+showId(25);
+showId("abc123");
+
+
+Output:
+ID doubled: 50
+ID: ABC123
+
+
+5. Literal Union Types
+Kabhi-kabhi hum sirf kuch fixed values allow karna chahte hain.
+type OrderStatus = "pending" | "shipped" | "delivered";
+
+let status: OrderStatus = "pending";
+
+status = "shipped";   // Valid
+status = "cancelled"; // Error
+
+
+Yahan OrderStatus string ka koi bhi value accept nahi karega. Sirf diye gaye 3 options valid hain.
+Real projects mein ye orders, payment status, user roles aur application status ke liye useful hai.
+
+Ab tumhari practice 💻
+Task 1 — Union Type
+value naam ka variable banao jo string ya number accept kar sake. Pehle 100, phir "TypeScript" assign karo aur dono baar print karo.
+
+
+Task 2 — Type Narrowing
+showValue(value: string | number) function banao. Agar value string hai to uppercase mein print karo; agar number hai to uska double print karo.
+
+
+Task 3 — Valid ya Error?
+type Payment = "success" | "pending" | "failed";
+
+let payment: Payment = "success";
+payment = "pending";
+payment = "refunded";
+
+
+Batao kaunsi assignment invalid hai aur kyun?
+
+Check my answers
+Next topic: Optional Properties aur readonly — objects ki properties ko optional banana aur unhe change hone se rokna.
