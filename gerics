@@ -1,0 +1,124 @@
+TypeScript Lesson 13: Generics <T> 🚀
+Aaj hum Generics seekhenge. Ye TypeScript ka important concept hai, jo professional code aur real projects mein kaafi use hota hai.
+Simple words mein: Generics se hum ek hi function ko different data types ke saath reuse kar sakte hain, bina type safety lose kiye.
+1. Generics ki zaroorat kyun hai?
+Maan lo tumhe ek function banana hai jo input ko return kare.
+Normal number function:
+function getNumber(value: number): number {
+    return value;
+}
+
+console.log(getNumber(100));
+
+
+Lekin agar string bhi return karni ho, to alag function banana padega:
+function getString(value: string): string {
+    return value;
+}
+
+
+Kya hum ek hi function se dono kaam kar sakte hain? Haan, Generics se!
+2. Pehla Generic function
+function getValue<T>(value: T): T {
+    return value;
+}
+
+console.log(getValue<number>(100));
+console.log(getValue<string>("Hello"));
+console.log(getValue<boolean>(true));
+
+
+Output:
+100
+Hello
+true
+
+
+Code ko samjho:
+- T ek placeholder hai, jo type represent karta hai.
+- <T> batata hai ki function generic hai.
+- value: T ka matlab input ka type T hai.
+- : T ka matlab return value ka type bhi T hai.
+Agar T = number hai, to function number leta aur number return karta hai.
+Agar T = string hai, to function string leta aur string return karta hai.
+Memory trick: T ko temporary Type samjho. T koi special fixed type nahi, sirf ek conventional naam hai.
+3. TypeScript khud type infer bhi kar sakta hai
+Har baar <number> ya <string> likhna zaroori nahi.
+function getValue<T>(value: T): T {
+    return value;
+}
+
+let result1 = getValue(500);
+let result2 = getValue("TypeScript");
+
+console.log(result1);
+console.log(result2);
+
+
+TypeScript automatically samajh leta hai:
+- getValue(500) → T is number
+- getValue("TypeScript") → T is string
+4. Generic function with arrays
+Maan lo humein array ka first item nikalna hai. Array numbers ka ho sakta hai ya strings ka.
+function getFirst<T>(items: T[]): T | undefined {
+    return items[0];
+}
+
+console.log(getFirst<number>([10, 20, 30]));
+console.log(getFirst<string>(["Apple", "Mango"]));
+console.log(getFirst<boolean>([true, false]));
+
+
+Output:
+10
+Apple
+true
+
+
+T[] ka matlab hai T type ke items ki array.
+T | undefined isliye likha hai kyunki empty array mein first item nahi hoga.
+console.log(getFirst<number>([])); // undefined
+
+
+5. Multiple generic types
+Ek function mein multiple generic types bhi ho sakte hain.
+function pair<T, U>(first: T, second: U): [T, U] {
+    return [first, second];
+}
+
+console.log(pair<string, number>("Age", 25));
+console.log(pair<boolean, string>(true, "Active"));
+
+
+Output:
+["Age", 25]
+[true, "Active"]
+
+
+Yahan:
+- T first value ka type hai.
+- U second value ka type hai.
+- [T, U] ek tuple type hai, jisme pehli aur doosri value ke types defined hain.
+
+6. Practice time 💻
+Task 1 — Generic function
+identity<T>(value: T): T naam ka generic function banao. Usse number 100 aur string "Hello" pass karke results print karo.
+
+
+Task 2 — First item
+getFirst<T> generic function banao jo array ka first item return kare. Numbers [5, 10, 15] aur strings ["Red", "Blue"] se test karo.
+
+
+Task 3 — Samjho aur batao
+function wrap<T>(value: T): T[] {
+    return [value];
+}
+
+console.log(wrap<number>(10));
+console.log(wrap<string>("Hi"));
+
+
+Dono console.log() ka output kya hoga?
+
+Check my answers
+Agla topic: Classes aur Objects — TypeScript mein classes banana, constructor use karna, aur public / private properties samajhna.
