@@ -1,0 +1,184 @@
+TypeScript Lesson 14: Classes & Objects 🏗️
+Aaj hum Classes, Objects aur Constructor seekhenge. Ye concepts Object-Oriented Programming (OOP) ka part hain aur bade applications banane mein useful hain.
+1. Class kya hoti hai?
+Simple example: maan lo tumhe multiple cars banani hain. Har car ka brand aur color hoga.
+Har car ke liye alag code likhne ke bajaye, hum ek class ko blueprint ki tarah use kar sakte hain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- Class = blueprint/design
+- Object = us blueprint se bani actual car
+TypeScript example:
+class Car {
+    brand: string;
+    color: string;
+
+    constructor(brand: string, color: string) {
+        this.brand = brand;
+        this.color = color;
+    }
+}
+
+const car1 = new Car("Tesla", "Red");
+const car2 = new Car("BMW", "Black");
+
+console.log(car1.brand);
+console.log(car2.color);
+
+
+Output:
+Tesla
+Black
+
+
+2. constructor() kya hota hai?
+constructor() ek special method hai jo object create karte waqt automatically execute hota hai.
+class Student {
+    name: string;
+    age: number;
+
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+const student1 = new Student("Rahul", 22);
+
+console.log(student1.name);
+console.log(student1.age);
+
+
+Output:
+Rahul
+22
+
+
+Samjho:
+- new Student(...) → naya object banata hai.
+- constructor(name, age) → initial values receive karta hai.
+- this.name → current object ki name property.
+- this.age → current object ki age property.
+Memory trick: this ka matlab hai current object.
+3. Class ke andar methods banana
+Method ka matlab hai class ke andar function.
+class Calculator {
+    add(a: number, b: number): number {
+        return a + b;
+    }
+
+    multiply(a: number, b: number): number {
+        return a * b;
+    }
+}
+
+const calculator = new Calculator();
+
+console.log(calculator.add(10, 20));
+console.log(calculator.multiply(4, 5));
+
+
+Output:
+30
+20
+
+
+Yahan add() aur multiply() dono methods hain.
+4. public aur private
+Ye access modifiers hain. Ye control karte hain ki class ki properties aur methods ko kahan se access kiya ja sakta hai.
+class BankAccount {
+    public owner: string;
+    private balance: number;
+
+    constructor(owner: string, balance: number) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+
+    public showBalance(): void {
+        console.log(this.balance);
+    }
+}
+
+const account = new BankAccount("Rahul", 5000);
+
+console.log(account.owner);  // Valid
+account.showBalance();       // Valid
+
+// console.log(account.balance); // TypeScript error
+
+
+Output:
+Rahul
+5000
+
+
+- public → class ke bahar se access kar sakte ho.
+- private → sirf us class ke andar access kar sakte ho.
+Dhyan rahe: TypeScript ka private compile-time type checking deta hai; JavaScript runtime par strong privacy ke liye #balance jaisa private field use hota hai.
+5. Shortcut: Constructor parameter properties
+TypeScript mein properties declare aur assign karne ka shortcut bhi hai.
+class Employee {
+    constructor(
+        public name: string,
+        public salary: number
+    ) {}
+}
+
+const emp = new Employee("Amit", 40000);
+
+console.log(emp.name);
+console.log(emp.salary);
+
+
+Output:
+Amit
+40000
+
+
+public name: string constructor ke andar likhne se TypeScript property create aur assign kar deta hai.
+
+Practice time 💻
+Task 1 — Apni class banao
+Mobile class banao jisme brand aur price properties hon. Constructor se values set karo. Ek object banao aur brand print karo.
+
+
+Task 2 — Method banao
+Rectangle class banao jisme length aur width ho. area() method rectangle ka area (length * width) return kare.
+
+
+Task 3 — Predict karo
+class Person {
+    constructor(public name: string) {}
+
+    greet(): void {
+        console.log("Hello " + this.name);
+    }
+}
+
+const p = new Person("Amit");
+p.greet();
+
+
+Output kya hoga? Aur this.name ka kya matlab hai?
+
+Check my answers
+Next topic: Inheritance (extends, super) — ek class doosri class ke features kaise reuse karti hai.
