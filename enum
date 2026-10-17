@@ -1,0 +1,80 @@
+Lesson 22: Enums aur Literal Types in TypeScript 🚀
+Aaj hum seekhenge ki jab kisi variable mein sirf kuch fixed values allowed hon, toh unhe TypeScript mein kaise define karte hain.
+1. Literal Types
+Maan lo order ka status sirf "pending", "shipped" ya "delivered" ho sakta hai.
+let status: "pending" | "shipped" | "delivered";
+
+status = "pending";   // ✅
+status = "delivered"; // ✅
+
+// status = "cancelled"; // ❌ Error
+
+
+Yahan status mein sirf ye teen values allowed hain.
+Isse union of string literal types kehte hain.
+Real-world example
+type UserRole = "admin" | "user" | "manager";
+
+function login(role: UserRole) {
+  console.log("Logged in as " + role);
+}
+
+login("admin"); // ✅
+login("user");  // ✅
+// login("guest"); // ❌ Error
+
+
+Kab use karein? Jab fixed strings ki chhoti list ho, jaise status, roles, themes ya payment methods.
+
+2. Enums
+enum bhi related fixed values ko group karne ka tareeka hai.
+enum OrderStatus {
+  Pending,
+  Shipped,
+  Delivered
+}
+
+let status: OrderStatus = OrderStatus.Pending;
+
+console.log(status); // 0
+
+
+By default, numeric enums 0 se start hote hain:
+Enum member	Value
+Pending	0
+Shipped	1
+Delivered	2
+Agar string values chahiye:
+enum OrderStatus {
+  Pending = "PENDING",
+  Shipped = "SHIPPED",
+  Delivered = "DELIVERED"
+}
+
+let status: OrderStatus = OrderStatus.Pending;
+
+console.log(status); // PENDING
+
+
+3. Literal Types vs Enums
+Literal types	Enums
+"pending" \| "shipped"	OrderStatus.Pending
+Simple fixed values ke liye	Named group of constants ke liye
+Runtime par alag enum object nahi banta	Normal enums runtime JavaScript code generate karte hain
+Modern TypeScript mein fixed string values ke liye literal unions kaafi useful hain. Enums bhi valid option hain, especially jab named enum members chahiye hon.
+Practice time 💻
+Task 1: PaymentStatus naam ka type banao, jisme sirf ye values allowed hon:
+- "success"
+- "pending"
+- "failed"
+Task 2: Neeche diye code mein kaunsi line error degi, aur kyun?
+type Role = "admin" | "user";
+
+let role: Role = "admin";
+role = "user";
+role = "manager";
+
+
+
+Check my answers
+Next lesson (23): TypeScript Modules — export aur import, taaki code ko multiple files mein organize kar sakein.
