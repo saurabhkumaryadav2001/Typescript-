@@ -1,0 +1,122 @@
+TypeScript Lesson 12: Optional Properties & readonly 🔐
+Aaj hum seekhenge ki object ki property ko optional kaise banate hain aur kisi property ko change hone se kaise rokte hain.
+1. Optional Property (?)
+Maan lo ek user ke paas name aur email hai. Lekin har user ka email available hona zaroori nahi.
+type User = {
+    name: string;
+    email?: string;
+};
+
+let user1: User = {
+    name: "Rahul",
+    email: "rahul@gmail.com"
+};
+
+let user2: User = {
+    name: "Amit"
+};
+
+console.log(user1);
+console.log(user2);
+
+
+Dono objects valid hain!
+Samjho:
+- name: string — name dena zaroori hai.
+- email?: string — email dena optional hai.
+- ? ka matlab property ho bhi sakti hai aur nahi bhi.
+Agar tum name hi nahi doge, to TypeScript error dega.
+2. Optional Property ko safely use karna
+Optional property ki value undefined ho sakti hai, isliye use karne se pehle check karna achha hai.
+type User = {
+    name: string;
+    email?: string;
+};
+
+function showUser(user: User): void {
+    console.log(user.name);
+
+    if (user.email !== undefined) {
+        console.log(user.email.toUpperCase());
+    } else {
+        console.log("Email not provided");
+    }
+}
+
+showUser({ name: "Rahul" });
+showUser({ name: "Priya", email: "priya@gmail.com" });
+
+
+Output:
+Rahul
+Email not provided
+Priya
+PRIYA@GMAIL.COM
+
+
+Yahan condition check karti hai ki email available hai ya nahi. Available hone par hi toUpperCase() call hota hai.
+3. readonly kya hota hai?
+Maan lo employee ki ID create hone ke baad change nahi honi chahiye.
+type Employee = {
+    readonly id: number;
+    name: string;
+};
+
+let employee: Employee = {
+    id: 101,
+    name: "Rahul"
+};
+
+employee.name = "Amit"; // Valid
+
+// employee.id = 102;   // TypeScript error
+
+
+Kyun?
+- name normal property hai, isliye change ho sakta hai.
+- id ke aage readonly hai, isliye banne ke baad usko dobara assign nahi kar sakte.
+Yaad rakho: readonly TypeScript ke type checking ke waqt protection deta hai; ye apne aap runtime par object ko immutable nahi banata.
+4. Optional aur readonly ek saath
+Dono features ek hi property par bhi use ho sakte hain.
+type Product = {
+    readonly productId: number;
+    name: string;
+    description?: string;
+};
+
+let product: Product = {
+    productId: 1,
+    name: "Laptop"
+};
+
+product.name = "Gaming Laptop"; // Valid
+
+// product.productId = 2;       // Error
+// description dena optional hai
+
+
+Yahan productId change nahi kar sakte, lekin description dena zaroori nahi hai.
+
+Practice time 💻
+Task 1 — Optional property
+Customer naam ka type banao. name required string ho aur phone optional string ho. Phir ek customer object banao jisme sirf name ho.
+
+
+Task 2 — Readonly
+Book type banao jisme readonly isbn: number aur title: string ho. Object banao, title change karo, phir ISBN change karne ki koshish karo. Batao kaunsi line error degi.
+
+
+Task 3 — Predict karo
+type User = {
+    name: string;
+    email?: string;
+};
+
+let user: User = { name: "Amit" };
+console.log(user.email);
+
+
+Output kya hoga aur kyun?
+
+Check my answers
+Next topic: Generics (<T>) — ek hi reusable function ya type ko different data types ke saath kaise use karte hain.
