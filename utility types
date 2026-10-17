@@ -1,0 +1,110 @@
+peScript Lesson 17: Utility Types 🛠️
+Aaj hum 4 important Utility Types seekhenge: Partial, Pick, Omit aur Record.
+Simple words mein, Utility Types ki help se hum existing type ko reuse karke uska naya version bana sakte hain. Har baar poora type dobara likhne ki zaroorat nahi hoti.
+1. Partial<T> — sab properties optional
+Maan lo ek user ka type hai:
+type User = {
+    name: string;
+    age: number;
+    email: string;
+};
+
+
+Normally, object mein teeno properties deni padengi. Lekin agar user ki sirf age update karni hai, to kya karein?
+Partial<User> use karo:
+type User = {
+    name: string;
+    age: number;
+    email: string;
+};
+
+function updateUser(data: Partial<User>): void {
+    console.log(data);
+}
+
+updateUser({ age: 25 }); 
+updateUser({ name: "Rahul" });
+
+
+Dono valid hain, kyunki Partial<User> sab properties ko optional bana deta hai.
+Yaad rakho: Partial = saari properties optional.
+2. Pick<T, K> — sirf selected properties
+Maan lo tumhare paas user ki saari details hain, lekin tumhe sirf name aur email chahiye.
+type User = {
+    name: string;
+    age: number;
+    email: string;
+};
+
+type UserPreview = Pick<User, "name" | "email">;
+
+const user: UserPreview = {
+    name: "Rahul",
+    email: "rahul@gmail.com"
+};
+
+
+UserPreview mein age required nahi hai, kyunki humne use select nahi kiya.
+Yaad rakho: Pick = jo properties chahiye, unhe select karo.
+3. Omit<T, K> — selected properties hatao
+Maan lo user ka password database mein hai, lekin profile display karte waqt password nahi chahiye.
+type User = {
+    name: string;
+    email: string;
+    password: string;
+};
+
+type PublicUser = Omit<User, "password">;
+
+const user: PublicUser = {
+    name: "Rahul",
+    email: "rahul@gmail.com"
+};
+
+
+Ab PublicUser mein name aur email hain, lekin password nahi hai.
+Yaad rakho: Omit = selected properties ko hatao.
+Note: Type se password hatana sirf type-level protection hai. Actual API response se sensitive data hatana bhi zaroori hai.
+4. Record<K, V> — keys aur values ka structure
+Maan lo har subject ke marks store karne hain.
+type Subject = "Maths" | "Science" | "English";
+
+const marks: Record<Subject, number> = {
+    Maths: 90,
+    Science: 85,
+    English: 88
+};
+
+console.log(marks.Maths);
+
+
+Output:
+90
+
+
+Yahan:
+- Subject allowed keys define karta hai.
+- number har key ki value ka type define karta hai.
+TypeScript check karega ki required keys present hon aur unki values numbers hon.
+Yaad rakho: Record = keys aur unki values ka type define karo.
+
+Quick revision
+Utility Type	Kaam
+Partial<T>	Sab properties optional
+Pick<T, K>	Selected properties rakho
+Omit<T, K>	Selected properties hatao
+Record<K, V>	Keys aur values ka structure
+Practice time 💻
+Task 1 — Partial
+Product type banao jisme name: string aur price: number ho. Phir Partial<Product> use karke sirf price wali value ka object banao.
+
+
+Task 2 — Pick aur Omit
+Employee type mein name, salary aur department rakho. Pick se sirf name select karo aur Omit se salary hatao.
+
+
+Task 3 — Record
+"Monday" | "Tuesday" | "Wednesday" ko keys ke roop mein use karke Record banao jisme har day ki value number ho.
+
+Check my answers
+Next topic: keyof aur typeof — existing objects aur types se TypeScript types automatically derive karna.
