@@ -1,0 +1,172 @@
+TypeScript Lesson 15: Inheritance (extends & super) 🏗️
+Aaj hum Inheritance seekhenge. Iska use tab hota hai jab ek class doosri class ke properties aur methods reuse karna chahti hai.
+1. Inheritance kya hota hai?
+Maan lo ek Animal class hai. Usmein animals ka naam aur sound karne ka method hai.
+Ab Dog aur Cat classes ko bhi ye features chahiye. Kya humein same code baar-baar likhna padega? Nahi! Hum inheritance use kar sakte hain.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. extends ka use
+class Animal {
+    constructor(public name: string) {}
+
+    eat(): void {
+        console.log(this.name + " is eating");
+    }
+}
+
+class Dog extends Animal {
+    bark(): void {
+        console.log(this.name + " says Woof!");
+    }
+}
+
+const dog = new Dog("Tommy");
+
+dog.eat();
+dog.bark();
+
+
+Output:
+Tommy is eating
+Tommy says Woof!
+
+
+Samjho:
+- Animal = parent/base class.
+- Dog = child/derived class.
+- extends Animal = Dog, Animal ke features inherit karta hai.
+- Dog apna extra method bark() bhi bana sakta hai.
+Memory trick: extends = parent class ke features reuse karna.
+3. super() kya hota hai?
+Jab child class apna constructor define karti hai, to parent class ka constructor call karne ke liye super() use karna hota hai.
+class Animal {
+    constructor(public name: string) {}
+}
+
+class Dog extends Animal {
+    constructor(name: string, public breed: string) {
+        super(name);
+    }
+}
+
+const dog = new Dog("Tommy", "Labrador");
+
+console.log(dog.name);
+console.log(dog.breed);
+
+
+Output:
+Tommy
+Labrador
+
+
+super(name) parent Animal class ke constructor ko name deta hai.
+Important: Derived class ke constructor mein this use karne se pehle super() call karna zaroori hai.
+4. Method overriding
+Child class parent ke method ko apne hisaab se implement kar sakti hai. Isko method overriding kehte hain.
+class Animal {
+    makeSound(): void {
+        console.log("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    override makeSound(): void {
+        console.log("Dog barks");
+    }
+}
+
+const animal = new Animal();
+const dog = new Dog();
+
+animal.makeSound();
+dog.makeSound();
+
+
+Output:
+Animal makes a sound
+Dog barks
+
+
+override TypeScript ko batata hai ki child class jaan-bujhkar parent ke method ko replace kar rahi hai.
+5. Real-world example: Employees
+class Employee {
+    constructor(
+        public name: string,
+        public salary: number
+    ) {}
+
+    showDetails(): void {
+        console.log(this.name + " earns " + this.salary);
+    }
+}
+
+class Manager extends Employee {
+    constructor(
+        name: string,
+        salary: number,
+        public teamSize: number
+    ) {
+        super(name, salary);
+    }
+}
+
+const manager = new Manager("Rahul", 60000, 5);
+
+manager.showDetails();
+console.log(manager.teamSize);
+
+
+Output:
+Rahul earns 60000
+5
+
+
+Manager ko Employee ka name, salary aur showDetails() method reuse karne ko milta hai.
+
+Practice time 💻
+Task 1 — Inheritance
+Vehicle class banao jisme brand property aur start() method ho. Bike class ko Vehicle se extend karo. Ek Bike object bana kar start() call karo.
+
+
+Task 2 — super()
+Person class mein name property ho. Student class usse extend kare aur rollNo property add kare. Dono values constructor se set karo.
+
+
+Task 3 — Output predict karo
+class Animal {
+    sound(): void {
+        console.log("Animal sound");
+    }
+}
+
+class Cat extends Animal {
+    override sound(): void {
+        console.log("Meow");
+    }
+}
+
+const cat = new Cat();
+cat.sound();
+
+
+Output kya hoga? Kyun?
