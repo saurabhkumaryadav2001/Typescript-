@@ -1,0 +1,401 @@
+examples aur real-world use ke saath. Iske baad hum projects aur interview practice par focus kar sakte hain.
+TypeScript Advanced Course: Lessons 31–40
+Lesson 31: Template Literal Types
+Iska use string patterns ko type level par define karne ke liye hota hai.
+type Action = "get" | "create" | "delete";
+type Entity = "User" | "Product";
+
+type ApiAction = `${Action}${Entity}`;
+
+
+Ab ApiAction mein ye values allowed hain:
+"getUser"
+"getProduct"
+"createUser"
+"createProduct"
+"deleteUser"
+"deleteProduct"
+
+
+Example:
+let action: ApiAction = "getUser"; // Valid
+
+// action = "updateUser"; // Error
+
+
+Real use: Event names, API action names aur fixed string formats.
+
+Lesson 32: Function Overloads
+Jab ek function ko alag-alag input types ke liye alag return types dene hon, tab function overloads use kar sakte hain.
+function format(value: string): string;
+function format(value: number): string;
+
+function format(value: string | number): string {
+  return String(value);
+}
+
+console.log(format("Hello")); // Hello
+console.log(format(100));     // 100
+
+
+Yahan pehli do lines overload signatures hain. Actual implementation neeche di gayi hai.
+Ek aur example:
+function getLength(value: string): number;
+function getLength(value: unknown[]): number;
+
+function getLength(value: string | unknown[]): number {
+  return value.length;
+}
+
+console.log(getLength("Hello")); // 5
+console.log(getLength([10, 20])); // 2
+
+
+Kab use karein? Jab input ke according function ka behavior ya return type different ho.
+
+Lesson 33: Advanced Generics
+Generics se reusable aur type-safe code likh sakte hain.
+A. Generic constraint
+function getId<T extends { id: number }>(item: T): number {
+  return item.id;
+}
+
+getId({ id: 1, name: "Rahul" }); // Valid
+
+// getId({ name: "Rahul" }); // Error
+
+
+T extends { id: number } ka matlab hai ki T mein number-type ki id property honi zaroori hai.
+B. Generic key access
+function getProperty<T, K extends keyof T>(
+  obj: T,
+  key: K
+): T[K] {
+  return obj[key];
+}
+
+const user = {
+  name: "Rahul",
+  age: 25
+};
+
+console.log(getProperty(user, "name")); // Rahul
+console.log(getProperty(user, "age"));  // 25
+
+
+TypeScript ko pata hai ki "name" ka result string hoga aur "age" ka result number.
+Real use: Reusable functions, database entities, form fields aur API response handling.
+
+Lesson 34: Type Assertions aur satisfies
+A. Type Assertion
+const input = document.querySelector("#username") as HTMLInputElement;
+
+console.log(input.value);
+
+
+as HTMLInputElement TypeScript ko batata hai ki tum input element expect kar rahe ho.
+Lekin dhyan do: assertion runtime par element ko check nahi karta. Agar element null hua, toh code fail ho sakta hai.
+Safer approach:
+const element = document.querySelector("#username");
+
+if (element instanceof HTMLInputElement) {
+  console.log(element.value);
+}
+
+
+B. satisfies
+Ye check karta hai ki object kisi type ki requirements satisfy karta hai, bina uske inferred type ko unnecessarily replace kiye.
+type Config = {
+  appName: string;
+  port: number;
+};
+
+const config = {
+  appName: "MyApp",
+  port: 3000
+} satisfies Config;
+
+
+Agar port: "3000" likhoge, toh TypeScript error dega, kyunki number expected hai.
+Difference: as assertion hai; satisfies compatibility check hai.
+
+Lesson 35: Declaration Files — .d.ts
+Declaration files TypeScript ko batati hain ki kisi JavaScript library ke functions, classes aur variables ke types kya hain.
+Example math.d.ts:
+export declare function add(
+  a: number,
+  b: number
+): number;
+
+
+Iska matlab hai ki add() function do numbers leta hai aur number return karta hai.
+Actual implementation alag JavaScript file mein ho sakti hai:
+export function add(a, b) {
+  return a + b;
+}
+
+
+.d.ts file type information deti hai; ye khud function implementation provide nahi karti.
+Real use: JavaScript libraries ke saath TypeScript use karna aur custom libraries ki type definitions likhna.
+
+Lesson 36: tsconfig.json
+Ye file TypeScript compiler ki settings control karti hai.
+Example:
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "strict": true,
+    "noEmitOnError": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*.ts"]
+}
+
+
+Important settings:
+Setting	Meaning
+target	Kaunsa JavaScript version generate karna hai
+module	Module system aur output behavior
+strict	Strict type checking enable karna
+noEmitOnError	Errors hone par output files generate na karna
+outDir	Compiled files kis folder mein jayengi
+include	Kaunsi files project mein include hongi
+Project ki module settings Node.js, browser bundler aur project configuration ke hisaab se alag ho sakti hain.
+Basic commands:
+npm install -D typescript
+npx tsc --init
+npx tsc
+npx tsc --noEmit
+
+
+- tsc --init configuration create karta hai.
+- tsc project compile karta hai.
+- tsc --noEmit type checking karta hai, bina output files emit kiye.
+
+Lesson 37: Error Handling aur API Typing
+API se aane wale data ko bina validation ke trusted nahi maanna chahiye.
+type User = {
+  id: number;
+  name: string;
+};
+
+async function getUser(): Promise<User> {
+  const response = await fetch("/api/user");
+
+  if (!response.ok) {
+    throw new Error("Request failed");
+  }
+
+  const data: unknown = await response.json();
+
+  if (
+    typeof data === "object" &&
+    data !== null &&
+    "id" in data &&
+    "name" in data &&
+    typeof data.id === "number" &&
+    typeof data.name === "string"
+  ) {
+    return {
+      id: data.id,
+      name: data.name
+    };
+  }
+
+  throw new Error("Invalid user data");
+}
+
+
+Yahan teen important steps hain:
+1. HTTP response successful hai ya nahi, check karna.
+2. API data ko unknown treat karna.
+3. Runtime validation ke baad hi expected User return karna.
+Use karte waqt:
+async function main(): Promise<void> {
+  try {
+    const user = await getUser();
+    console.log(user.name);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    }
+  }
+}
+
+main();
+
+
+Important: fetch() network failure par reject ho sakta hai, lekin HTTP 404 ya 500 par normally response return karta hai. Isliye response.ok check karna zaroori hai.
+
+Lesson 38: TypeScript Testing
+Testing se verify karte hain ki code expected result de raha hai ya nahi.
+Example function:
+export function add(a: number, b: number): number {
+  return a + b;
+}
+
+
+Vitest ke saath test:
+import { describe, expect, it } from "vitest";
+import { add } from "./math";
+
+describe("add", () => {
+  it("adds two numbers", () => {
+    expect(add(2, 3)).toBe(5);
+  });
+
+  it("supports negative numbers", () => {
+    expect(add(-2, 1)).toBe(-1);
+  });
+});
+
+
+Common testing concepts:
+- Unit test: Ek function ya chhote unit ko test karna.
+- Integration test: Multiple components ka interaction test karna.
+- Edge cases: Empty input, zero, invalid data aur boundary values test karna.
+TypeScript compiler errors pakadta hai, lekin tests runtime behavior verify karte hain. Dono ki zaroorat hoti hai.
+
+Lesson 39: Debugging aur Common Mistakes
+Mistake 1: Har cheez ko any banana
+let data: any = "hello";
+console.log(data.toFixed(2));
+
+
+Compiler is misuse ko rok nahi paata.
+Better:
+let data: unknown = "hello";
+
+if (typeof data === "number") {
+  console.log(data.toFixed(2));
+}
+
+
+Mistake 2: API response ko bina validation type dena
+const user = await response.json() as User;
+
+
+Ye actual data validate nahi karta. unknown aur runtime validation use karna safer hai.
+Mistake 3: Optional property ko guaranteed samajhna
+type User = {
+  name?: string;
+};
+
+const user: User = {};
+
+console.log(user.name.toUpperCase()); // Error
+
+
+Safer:
+if (user.name !== undefined) {
+  console.log(user.name.toUpperCase());
+}
+
+
+Mistake 4: null ko ignore karna
+const element = document.querySelector("#app");
+
+if (element !== null) {
+  element.textContent = "Hello";
+}
+
+
+DOM query ko element na milne par null mil sakta hai.
+
+Lesson 40: Practical Patterns aur Mini Project
+Ab ek simple Product Management example dekhte hain, jisme types, generics, Partial aur error handling ka use hota hai.
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+function findById<T extends { id: number }>(
+  items: T[],
+  id: number
+): T | undefined {
+  return items.find(item => item.id === id);
+}
+
+function updateProduct(
+  product: Product,
+  changes: Partial<Omit<Product, "id">>
+): Product {
+  return {
+    ...product,
+    ...changes
+  };
+}
+
+const products: Product[] = [
+  { id: 1, name: "Laptop", price: 50000 },
+  { id: 2, name: "Phone", price: 20000 }
+];
+
+const product = findById(products, 1);
+
+if (product) {
+  const updated = updateProduct(product, {
+    price: 45000
+  });
+
+  console.log(updated);
+}
+
+
+Output:
+{
+  id: 1,
+  name: "Laptop",
+  price: 45000
+}
+
+
+Is example mein:
+- T extends { id: number } generic constraint hai.
+- T | undefined batata hai ki product mil bhi sakta hai aur nahi bhi.
+- Partial fields ko optional banata hai.
+- Omit<Product, "id"> update se id ko exclude karta hai.
+Ye ek in-memory example hai. Real CRUD project mein database ya API integration, input validation, tests aur proper error responses bhi add karne honge.
+
+Ab TypeScript mein kya baaki hai?
+Ab tumne important advanced concepts ka overview dekh liya. Lekin expert banne ke liye inhe khud code karke practice karna zaroori hai.
+Final learning roadmap
+Core TypeScript
+Variables, functions, objects, classes, generics, utility types.
+
+
+Advanced TypeScript concepts
+Type guards, conditional types, mapped types, modules, async/await.
+
+
+Ab practice karna hai
+Testing, debugging, API integration, compiler configuration aur real-world architecture.
+
+
+Next step
+CRUD project, API-based project, revision aur interview questions.
+
+
+
+Meri recommendation: Ab ek practical TypeScript project banao jisme product add, list, update aur delete kar sako. Isse tumhare kaafi concepts ek saath strong honge. Uske baad TypeScript ko kisi framework ke saath use karna seekh sakte ho.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ad
+Ad options
+
+
+
+Learn more
