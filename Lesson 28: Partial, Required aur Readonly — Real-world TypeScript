@@ -1,0 +1,124 @@
+Lesson 28: Partial, Required aur Readonly — Real-world TypeScript
+Ye utility types real projects mein bahut kaam aate hain, especially CRUD applications aur API development mein.
+1. Partial<T> — Saari properties optional
+Maan lo ek product hai:
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+
+Normal object mein teeno properties required hain:
+const product: Product = {
+  id: 1,
+  name: "Laptop",
+  price: 50000
+};
+
+
+Lekin jab sirf price update karni ho, tab Partial use kar sakte hain:
+type UpdateProduct = Partial<Product>;
+
+const update: UpdateProduct = {
+  price: 45000
+};
+
+
+Ab id, name aur price sab optional ho gaye.
+Real use: Update API mein sirf changed fields bhejna.
+2. Required<T> — Saari properties required
+type User = {
+  name?: string;
+  email?: string;
+};
+
+type CompleteUser = Required<User>;
+
+const user: CompleteUser = {
+  name: "Rahul",
+  email: "rahul@example.com"
+};
+
+
+Required<User> optional properties ko required bana deta hai.
+Agar email missing hoga, toh TypeScript error dega.
+Real use: Jab kisi object mein saari fields dena compulsory ho.
+3. Readonly<T> — Properties ko reassign karne se rokna
+type Config = {
+  appName: string;
+  version: number;
+};
+
+const config: Readonly<Config> = {
+  appName: "MyApp",
+  version: 1
+};
+
+console.log(config.appName);
+
+// config.appName = "NewApp"; // Error
+
+
+Readonly ke through TypeScript properties ko reassign karne se rokta hai.
+Dhyan do: Ye compile-time protection hai. Ye object ko runtime par deeply immutable nahi banata.
+4. Teeno ka comparison
+Utility type	Kya karta hai?	Example use
+Partial<T>	Sab optional	Update product
+Required<T>	Sab required	Complete user form
+Readonly<T>	Reassignment block	Configuration object
+5. Real-world CRUD example
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+function updateProduct(
+  product: Product,
+  changes: Partial<Product>
+): Product {
+  return {
+    ...product,
+    ...changes
+  };
+}
+
+const laptop: Product = {
+  id: 1,
+  name: "Laptop",
+  price: 50000
+};
+
+const updatedLaptop = updateProduct(laptop, {
+  price: 45000
+});
+
+console.log(updatedLaptop);
+
+
+Output:
+{
+  id: 1,
+  name: "Laptop",
+  price: 45000
+}
+
+
+Yahan spread operator (...) original product aur changed properties ko merge karta hai.
+Important: Agar id update nahi karna chahiye, toh Partial<Product> ke bajay Partial<Omit<Product, "id">> use kar sakte ho.
+Practice time 💻
+Maan lo:
+type Employee = {
+  name: string;
+  salary: number;
+  department?: string;
+};
+
+
+Task 1: Aisa type banao jisme name aur salary optional ho jaayein.
+Task 2: Aisa type banao jisme department bhi required ho jaaye.
+Task 3: Employee ki saari properties readonly banane ka type likho.
+
+Check answers
+Next lesson (29): Mapped Types — apne custom utility types banana aur object ki properties ko automatically transform karna.
