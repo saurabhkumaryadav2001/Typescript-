@@ -1,0 +1,83 @@
+esson 19: Type Guards in TypeScript 🚀
+Type Guard ka use hota hai check karne ke liye ki kisi variable ka actual type kya hai, taaki TypeScript safely uske saath kaam kar sake.
+1. Problem samjho
+Maan lo variable mein string ya number, dono aa sakte hain.
+function printValue(value: string | number) {
+  console.log(value);
+}
+
+
+Yahan value ka type string | number hai, jise Union Type kehte hain.
+Agar humein sirf string hone par uppercase karna ho, toh kya karenge?
+2. typeof se Type Guard
+function printValue(value: string | number) {
+  if (typeof value === "string") {
+    console.log(value.toUpperCase());
+  } else {
+    console.log(value * 2);
+  }
+}
+
+printValue("hello"); // HELLO
+printValue(10);      // 20
+
+
+typeof value === "string"
+
+TypeScript samajh jaata hai ki if block ke andar value string hai.
+
+else block
+
+Yahan TypeScript samajhta hai ki value number hai.
+
+3. Array.isArray() se Type Guard
+function showData(data: string | string[]) {
+  if (Array.isArray(data)) {
+    console.log(data.length);
+  } else {
+    console.log(data.toUpperCase());
+  }
+}
+
+showData(["apple", "mango"]); // 2
+showData("hello");            // HELLO
+
+
+- Array.isArray(data) → check karta hai ki value array hai ya nahi.
+- Array hone par .length se elements ki count milti hai.
+- String hone par .toUpperCase() use kar sakte hain.
+4. in operator se Type Guard
+Jab do object types ki properties alag hon, tab in operator useful hai.
+type Car = {
+  drive: () => void;
+};
+
+type Bike = {
+  ride: () => void;
+};
+
+function useVehicle(vehicle: Car | Bike) {
+  if ("drive" in vehicle) {
+    vehicle.drive();
+  } else {
+    vehicle.ride();
+  }
+}
+
+
+Yahan "drive" in vehicle check karta hai ki object mein drive property hai ya nahi.
+Practice time 💻
+Task: Neeche code ka output kya hoga, aur kyun?
+function calculate(value: string | number) {
+  if (typeof value === "number") {
+    console.log(value + 10);
+  } else {
+    console.log(value.length);
+  }
+}
+
+calculate(5);
+calculate("Hello");
+
+
+Dono outputs likho aur Type Guard ka role samjhao.
