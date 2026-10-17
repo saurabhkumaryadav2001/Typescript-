@@ -1,0 +1,85 @@
+Lesson 20: Custom Type Guards in TypeScript 🚀
+Pichhle lesson mein humne typeof, Array.isArray() aur in se Type Guards seekhe the. Ab seekhenge apna khud ka Type Guard function kaise banate hain.
+1. Problem samjho
+Maan lo humein check karna hai ki koi value string hai ya nahi.
+function isString(value: unknown): boolean {
+  return typeof value === "string";
+}
+
+console.log(isString("Hello")); // true
+console.log(isString(100));     // false
+
+
+Ye function check toh karta hai, lekin TypeScript ko har situation mein custom function ke through type narrow karne ki information nahi deta.
+2. Custom Type Guard: is
+TypeScript mein value is string ka special meaning hai.
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function printValue(value: unknown) {
+  if (isString(value)) {
+    console.log(value.toUpperCase());
+  } else {
+    console.log("Not a string");
+  }
+}
+
+printValue("hello"); // HELLO
+printValue(123);     // Not a string
+
+
+Important line:
+value is string
+
+
+Iska matlab: agar function true return kare, toh TypeScript value ko string maan sakta hai.
+Yaad rakhne ka trick
+- boolean → sirf true ya false batata hai.
+- value is string → true/false ke saath TypeScript ko type ki information bhi deta hai.
+
+3. Real-world example: User object
+type User = {
+  name: string;
+  age: number;
+};
+
+function isUser(value: unknown): value is User {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+
+  if (!("name" in value) || !("age" in value)) {
+    return false;
+  }
+
+  return typeof value.name === "string"
+    && typeof value.age === "number";
+}
+
+const data: unknown = {
+  name: "Rahul",
+  age: 25
+};
+
+if (isUser(data)) {
+  console.log(data.name);
+  console.log(data.age);
+}
+
+
+Yahan isUser() verify karta hai ki object mein name string hai aur age number hai. Check pass hone ke baad TypeScript data ko User type ke roop mein use karne deta hai.
+Note: Ye basic example hai; production code mein object arrays, extra properties aur input validation ki requirements bhi ho sakti hain.
+Practice time 💻
+Task: Neeche function complete karo.
+function isNumber(value: unknown): value is number {
+  // Yahan condition likho
+}
+
+console.log(isNumber(50));      // true
+console.log(isNumber("Hello")); // false
+
+
+
+Check answer
+Next lesson (21): never, unknown aur any ka practical difference — production TypeScript code mein inka sahi use.
