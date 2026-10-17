@@ -1,0 +1,1458 @@
+let  age:number=25;
+let + variable name + type + value.
+Code	Meaning
+let	Variable declare karne ke liye
+studentName	Variable ka naam
+string	Data text hai
+=	Value assign karta hai
+"Rahul"	Actual value
+console.log()	Console mein value print karta hai
+console.log(age);
+
+
+
+---------------------------
+let age: number = 22;
+
+console.log(age);
+
+age = 23;
+
+console.log(age);
+
+o/p:-22
+     23 
+
+
+Task 1: myName variable banao aur usmein apna naam store karo. Type string hona chahiye.
+ let myName:string="saurh":
+
+[ ] Task 2: myAge variable banao. Type number rakho aur apni age print karo.
+
+ let age:number=24;
+console.log(age);
+[ ] Task 3: isLearningTypeScript naam ka boolean variable banao aur usko true assign karo.
+
+let isLearning:boolean=True;
+[ ] Task 4: let se marks variable banao, pehle 80 assign karo, phir 90 assign karo aur dono values print karo.
+
+let marks:number=80:
+  marks=90;
+console.log(marks);
+
+
+1. any type
+any ka matlab hai TypeScript ko kehna: “Is variable ki type checking par restriction mat lagao.”
+let data: any = 100;
+
+data = "Hello";
+data = true;
+data = 500;
+
+console.log(data);
+
+
+Output:
+500
+
+
+Yahan humne ek hi variable mein number, string aur boolean rakhe. TypeScript ne type error nahi diya.
+Problem: any ka zyada use karoge toh TypeScript ka main benefit, yani type safety, kam ho jayega.
+let username: any = "Rahul";
+
+console.log(username.toFixed(2));
+
+
+toFixed() numbers ka method hai, lekin yahan value string hai. TypeScript any ki wajah se is galti ko normally type-checking ke waqt nahi pakdega; runtime par error aa sakta hai.
+Yaad rakho: any = type checking se bachne ka shortcut. Iska use zaroorat padne par hi karo.
+
+2. unknown type
+unknown bhi kisi bhi type ki value accept karta hai, lekin any se safer hai.
+let data: unknown = "Hello";
+
+// console.log(data.toUpperCase()); // Error
+
+if (typeof data === "string") {
+    console.log(data.toUpperCase());
+}
+
+
+Output:
+HELLO
+
+
+Kyun?
+TypeScript ko pehle confirm karna padta hai ki data string hai. typeof data === "string" check ke baad woh string ke methods use karne deta hai.
+Real-world example: API se data aa raha hai aur tumhe abhi pata nahi ki uska type kya hoga.
+Memory trick:
+- any → bina check ke use kar sakte ho.
+- unknown → use karne se pehle type check karo.
+
+
+  3. null aur undefined
+Dono ka matlab value missing ho sakti hai, lekin meaning thoda alag hai.
+null — jaanbujhkar empty value
+let selectedUser: string | null = null;
+
+selectedUser = "Rahul";
+
+console.log(selectedUser);
+
+
+Pehle user select nahi hua tha, isliye null. Baad mein user select hua, toh naam assign kar diya.
+undefined — value available nahi hai
+let city: string | undefined;
+
+console.log(city);
+
+
+Output:
+undefined
+
+
+Variable declare hua, lekin usko value assign nahi ki gayi.
+Dhyan do: string | null ka matlab variable mein string ya null ho sakta hai. Isi tarah string | undefined ka matlab string ya undefined.
+4. Type Inference — TypeScript khud type samajhta hai
+Ye bahut important concept hai.
+Tum likhte ho:
+let age = 24;
+
+
+TypeScript samajh leta hai ki age ka type number hai. Tumhe : number likhne ki zaroorat nahi.
+let name = "Rahul";
+let isLoggedIn = true;
+
+console.log(name);
+console.log(isLoggedIn);
+
+
+TypeScript infer karta hai:
+- name → string
+- isLoggedIn → boolean
+Agar tum baad mein likho:
+let age = 24;
+
+age = "twenty four"; // Type error
+
+
+TypeScript error dega, kyunki pehli value se type number infer hua tha.
+Professional rule: Jab TypeScript type clearly infer kar sakta hai, toh har jagah explicit type likhna zaroori nahi.
+5. Chalo khud practice karo
+TypeScript Playground open karo: Playground
+Har task ka code khud type karo.
+Your coding tasks
+[ ] Task 1: any type ka variable banao. Usmein pehle 100, phir "Hello" assign karo. Dono values print karo.
+
+
+[ ] Task 2: unknown type ka variable banao jisme "typescript" ho. typeof check karke usko uppercase mein print karo.
+
+
+[ ] Task 3: string | null type ka email variable banao, pehle null rakho, phir "test@gmail.com" assign karo.
+
+
+[ ] Task 4: let marks = 80 likho. Phir marks = 90 assign karo. Type explicitly likhe bina TypeScript ko type infer karne do.
+
+0/4 tasks marked complete
+
+6. Quick revision test
+Q1. Unknown value ka method use karne se pehle kya karna chahiye?
+
+Kuch nahi
+
+Type check karna chahiye
+
+Variable delete karna chahiye
+
+
+Q2. let score = 50; mein type kaun infer karta hai?
+
+TypeScript
+
+Browser user
+
+Koi nahi
+
+
+Q3. let user: string | null = null; mein kaunsi values allowed hain?
+
+Sirf number
+
+String ya null
+
+Koi bhi type, bina restriction
+
+Check answers
+Ab tumhari baari: pehle chaar coding tasks khud likho aur apna code yahan bhejo. Main code review karunga. Uske baad hum Concept 3: Operators seekhenge — arithmetic, comparison, logical operators aur practical examples ke saath.
+
+
+
+  Your coding tasks
+[ ] Task 1: any type ka variable banao. Usmein pehle 100, phir "Hello" assign karo. Dono values print karo.
+
+ let marks :any=100;
+  console.log.print(marks);
+  marks="Hello":
+  console.log(marks);
+  
+[ ] Task 2: unknown type ka variable banao jisme "typescript" ho. typeof check karke usko uppercase mein print karo.
+  let data: unknown = "typescript";
+
+if (typeof data === "string") {
+    console.log(data.toUpperCase());
+}
+
+let data :unknown="typescript";
+  if(data=="string"){
+    console.log.print(data.upperCase(dat));
+  }
+[ ] Task 3: string | null type ka email variable banao, pehle null rakho, phir "test@gmail.com" assign karo.
+  let email: string | null = null;
+
+console.log(email);
+
+email = "test@gmail.com";
+
+console.log(email);
+
+
+[ ] Task 4: let marks = 80 likho. Phir marks = 90 assign karo. Type explicitly likhe bina TypeScript ko type infer karne do.
+  let marks = 80;
+
+console.log(marks);
+
+marks = 90;
+
+console.log(marks);
+
+
+
+
+  --------------------------------
+  Level 1 — Concept 3: Operators in TypeScript
+Operators ka use calculations karne, values compare karne aur decisions lene ke liye hota hai.
+Example: Tum ek shopping application bana rahe ho. Product price ₹500 hai aur discount ₹100 hai. Final price calculate karne ke liye operator use karoge.
+Aaj hum 4 types ke operators seekhenge:
+1. Arithmetic operators
+2. Comparison operators
+3. Logical operators
+4. Assignment operators
+1. Arithmetic Operators — calculations
+Ye maths ke operators hain.
+Operator	Meaning	Example	Result
++	Addition	10 + 5	15
+-	Subtraction	10 - 5	5
+*	Multiplication	10 * 5	50
+/	Division	10 / 5	2
+%	Remainder	10 % 3	1
+**	Power	2 ** 3	8
+Code khud type karo
+let a: number = 10;
+let b: number = 3;
+
+console.log(a + b);
+console.log(a - b);
+console.log(a * b);
+console.log(a / b);
+console.log(a % b);
+console.log(a ** b);
+
+
+Output:
+13
+7
+30
+3.3333333333333335
+1
+1000
+
+
+Important: % operator
+10 % 3 ka result 1 hai, kyunki 10 ko 3 se divide karne par remainder 1 bachta hai.
+Ye even/odd check karne mein bahut useful hai.
+let number: number = 7;
+
+console.log(number % 2);
+
+
+Output 1 aayega. Agar remainder 0 hai, toh number even hai.
+2. Comparison Operators — values compare karna
+Ye operators comparison ka result true ya false mein dete hain.
+Operator	Meaning
+===	Equal value aur equal type
+!==	Value ya type mein difference
+>	Greater than
+<	Less than
+>=	Greater than or equal
+<=	Less than or equal
+Example:
+let age: number = 24;
+
+console.log(age > 18);
+console.log(age < 18);
+console.log(age === 24);
+console.log(age !== 24);
+
+
+Output:
+true
+false
+true
+false
+
+
+== aur === mein difference
+JavaScript/TypeScript mein:
+console.log(5 == "5");  // true
+console.log(5 === "5"); // false
+
+
+== type conversion kar sakta hai, jabki === type conversion kiye bina compare karta hai.
+Professional rule: Generally === aur !== prefer karo.
+3. Logical Operators — multiple conditions
+Maan lo ek website par login karne ke liye user ka username aur password dono sahi hone chahiye.
+Teen important operators hain:
+- && — AND: dono conditions true honi chahiye.
+- || — OR: kam se kam ek condition true honi chahiye.
+- ! — NOT: boolean result ko reverse karta hai.
+AND (&&)
+let age: number = 24;
+let hasId: boolean = true;
+
+console.log(age >= 18 && hasId);
+
+
+Output:
+true
+
+
+Dono conditions true hain.
+OR (||)
+let hasEmail: boolean = false;
+let hasPhone: boolean = true;
+
+console.log(hasEmail || hasPhone);
+
+
+Output:
+true
+
+
+Phone available hai, isliye ek condition true hai.
+NOT (!)
+let isLoggedIn: boolean = false;
+
+console.log(!isLoggedIn);
+
+
+Output:
+true
+
+
+! false ko true bana deta hai aur true ko false.
+4. Assignment Operators — value assign ya update karna
+let score: number = 10;
+
+score += 5;  // score = score + 5
+console.log(score); // 15
+
+score -= 3;  // score = score - 3
+console.log(score); // 12
+
+score *= 2;  // score = score * 2
+console.log(score); // 24
+
+score /= 4;  // score = score / 4
+console.log(score); // 6
+
+
+Yaad rakho:
+score += 5 ka matlab hai current score mein 5 add karo aur result wapas score mein store karo.
+
+Ab practice karte hain
+Playground open karo: TypeScript Playground
+Pehle khud solve karna. Abhi solution dekhne ki zaroorat nahi.
+Operator quiz
+Q1. 17 % 5 ka result kya hoga?
+
+2
+
+3
+
+5
+
+
+Q2. 10 >= 10 ka result?
+
+true
+
+false
+
+
+Q3. true && false ka result?
+
+true
+
+false
+
+
+Q4. let x = 5; x += 3; ke baad x ki value?
+
+5
+
+8
+
+15
+
+Check answers
+Coding challenge
+Ye code khud likho aur output predict karo:
+let price: number = 500;
+let discount: number = 100;
+
+let finalPrice = price - discount;
+
+console.log(finalPrice);
+console.log(finalPrice > 300);
+console.log(finalPrice === 400);
+
+
+Mujhe apna code aur output bhejo. Uske baad hum Concept 4: Conditions (if, else if, else, switch) seekhenge, jahan tum real-world decisions wala code likhna shuru karoge.
+
+
+
+  ------------------------
+
+  Concept 4: Conditions in TypeScript
+1. if statement
+if ka matlab hai: agar condition true hai, tab code chalao.
+Example:
+let age: number = 24;
+
+if (age >= 18) {
+    console.log("You are eligible to vote");
+}
+
+
+Output:
+You are eligible to vote
+
+
+Kaise kaam karta hai?
+1. age ki value 24 hai.
+2. age >= 18 check hota hai.
+3. Condition true hai.
+4. Isliye if ke andar ka code execute hota hai.
+Agar age 16 kar do, toh condition false hogi aur message print nahi hoga.
+let age: number = 16;
+
+if (age >= 18) {
+    console.log("You are eligible to vote");
+}
+
+
+Output: kuch print nahi hoga.
+2. if...else
+Agar condition true ho toh ek kaam, warna doosra kaam.
+let age: number = 16;
+
+if (age >= 18) {
+    console.log("Eligible");
+} else {
+    console.log("Not eligible");
+}
+
+
+Output:
+Not eligible
+
+
+Yaad rakhne ka formula:
+- if → agar condition true hai.
+- else → agar condition false hai.
+3. if...else if...else
+Jab multiple conditions check karni hon, tab else if use hota hai.
+Example: Exam result.
+let marks: number = 75;
+
+if (marks >= 90) {
+    console.log("Grade A");
+} else if (marks >= 60) {
+    console.log("Grade B");
+} else if (marks >= 35) {
+    console.log("Grade C");
+} else {
+    console.log("Fail");
+}
+
+
+Output:
+Grade B
+
+
+Kyun? Marks 75 hain. Pehli condition false hai, doosri condition true hai. Isliye Grade B print hoga aur baaki conditions check nahi hongi.
+Dhyan do: conditions ka order important hai. Sabse high marks wali condition pehle check karna sahi rahega.
+4. Logical operators ke saath conditions
+Maan lo exam dene ke liye age 18 ya usse zyada honi chahiye aur ID card bhi hona chahiye.
+let age: number = 22;
+let hasId: boolean = true;
+
+if (age >= 18 && hasId) {
+    console.log("You can enter");
+} else {
+    console.log("Entry denied");
+}
+
+
+Output:
+You can enter
+
+
+&& ka matlab dono conditions true honi chahiye.
+5. switch statement
+Jab ek variable ki value ke hisaab se alag-alag cases handle karne hon, tab switch useful hota hai.
+Example: Day number.
+let day: number = 2;
+
+switch (day) {
+    case 1:
+        console.log("Monday");
+        break;
+
+    case 2:
+        console.log("Tuesday");
+        break;
+
+    case 3:
+        console.log("Wednesday");
+        break;
+
+    default:
+        console.log("Invalid day");
+}
+
+
+Output:
+Tuesday
+
+
+break current case ko execute karne ke baad switch se bahar nikalta hai. default tab execute hota hai jab koi case match nahi karta.
+
+Practice time — khud code likho
+Playground kholo: TypeScript Playground
+Coding tasks
+[ ] Task 1 — Voting eligibility: age variable banao. Agar age 18 ya zyada hai toh "Eligible" print karo, warna "Not eligible".
+
+
+[ ] Task 2 — Exam result: marks = 28 rakho. Marks 35 ya zyada hain toh "Pass", warna "Fail" print karo.
+
+
+[ ] Task 3 — Grade system: Marks 85 ya zyada = "A", 60 ya zyada = "B", 35 ya zyada = "C", warna "Fail".
+
+0/3 tasks completed
+
+Quick quiz
+Q1. Agar age = 15 hai, toh if (age >= 18) ki condition kya hogi?
+
+true
+
+false
+
+
+Q2. switch mein break ka main kaam kya hai?
+
+Variable declare karna
+
+Current case ke baad switch se bahar nikalna
+
+Condition ko true karna
+
+Check answers
+Ab tumhari baari: Pehle coding tasks try karo aur apna code yahan bhejo. Main mistakes ko simple Hinglish mein explain karunga.
+  ------------------------
+
+
+
+  Chalo bhai! 🔥 Ab hum TypeScript ka Concept 5: Loops seekhenge. Loops bahut important hain, kyunki inki help se tum ek hi code ko baar-baar likhne ke bajaye automatically execute karwa sakte ho.
+Concept 5: Loops in TypeScript
+1. Loop kya hota hai?
+Maan lo tumhe "Hello" 5 baar print karna hai.
+Loop ke bina:
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+console.log("Hello");
+
+
+Loop ke saath:
+for (let i = 1; i <= 5; i++) {
+    console.log("Hello");
+}
+
+
+Output dono mein same hoga:
+Hello
+Hello
+Hello
+Hello
+Hello
+
+
+Yaad rakho: Loop ka matlab hai kisi kaam ko baar-baar repeat karna.
+2. for loop — sabse important
+Pehle ye code samjho:
+for (let i = 1; i <= 5; i++) {
+    console.log(i);
+}
+
+
+Output:
+1
+2
+3
+4
+5
+
+
+For loop ke 3 parts
+let i = 1
+Starting point — counting 1 se shuru hogi.
+
+i <= 5
+Condition — jab tak ye true hai, loop chalega.
+
+i++
+Har round ke baad i mein 1 add hoga. Jaise 1, 2, 3...
+
+
+Code ko step-by-step dekho
+Round	i ki value	Condition	Output
+1	1	True	1
+2	2	True	2
+3	3	True	3
+4	4	True	4
+5	5	True	5
+6	6	False	Loop stops
+Jab i = 6 ho jata hai, i <= 5 false hota hai aur loop band ho jata hai.
+Important: i++ ka matlab i = i + 1 hai.
+3. Reverse counting
+Agar 5 se 1 tak print karna hai:
+for (let i = 5; i >= 1; i--) {
+    console.log(i);
+}
+
+
+Output:
+5
+4
+3
+2
+1
+
+
+Yahan i-- ka matlab hai har round mein 1 kam karna.
+4. while loop
+Jab tak condition true hai, loop chalta rahega.
+let i: number = 1;
+
+while (i <= 3) {
+    console.log(i);
+    i++;
+}
+
+
+Output:
+1
+2
+3
+
+
+Kaise kaam karta hai?
+1. i = 1 se start.
+2. Condition i <= 3 check hoti hai.
+3. Value print hoti hai.
+4. i++ value ko badhata hai.
+5. Condition false hone par loop stop hota hai.
+Warning: Agar i++ hata doge, toh is example mein loop continuously 1 print karta rahega. Isse infinite loop kehte hain.
+5. do...while loop
+Ismein code pehle execute hota hai, condition baad mein check hoti hai. Isliye loop kam se kam ek baar zaroor chalta hai.
+let i: number = 1;
+
+do {
+    console.log(i);
+    i++;
+} while (i <= 3);
+
+
+Output:
+1
+2
+3
+
+
+Difference samjho:
+let i: number = 10;
+
+while (i <= 3) {
+    console.log(i);
+}
+
+
+Output: kuch nahi, kyunki condition shuru mein hi false hai.
+Lekin:
+let i: number = 10;
+
+do {
+    console.log(i);
+} while (i <= 3);
+
+
+Output:
+10
+
+
+Kyunki do...while mein body pehle chalti hai.
+6. for...of loop
+Is loop ka use arrays ke items ko ek-ek karke access karne ke liye hota hai. Arrays hum agle concept mein detail se seekhenge.
+let fruits: string[] = ["Apple", "Mango", "Banana"];
+
+for (const fruit of fruits) {
+    console.log(fruit);
+}
+
+
+Output:
+Apple
+Mango
+Banana
+
+
+Har round mein fruit ko array ka agla item milta hai.
+
+Ab tumhari practice 💪
+TypeScript Playground kholo aur code khud type karo.
+Coding tasks
+[ ] Task 1: for loop use karke 1 se 10 tak numbers print karo.
+
+
+[ ] Task 2: for loop use karke 10 se 1 tak reverse counting karo.
+
+
+[ ] Task 3: while loop se 2, 4, 6, 8, 10 print karo.
+
+
+[ ] Task 4: for loop use karke 5 ka table print karo: 5, 10, 15... 50.
+
+0/4 tasks completed
+
+Quick quiz
+Q1. i++ ka matlab kya hai?
+
+1 subtract karna
+
+1 add karna
+
+Loop band karna
+
+
+Q2. Kaunsa loop kam se kam ek baar execute hota hai?
+
+while
+
+for
+
+do...while
+
+
+Q3. for (let i = 1; i <= 3; i++) kitni baar chalega?
+
+2 baar
+
+
+
+
+  TypeScript Lesson 6: Arrays 📚
+Ab hum Arrays seekhenge. Arrays ka use ek hi variable mein multiple values store karne ke liye hota hai.
+1. Array kya hota hai?
+Maan lo tumhe 3 students ke names store karne hain.
+Normal variables se:
+let student1: string = "Rahul";
+let student2: string = "Amit";
+let student3: string = "Priya";
+
+
+Isse better hai Array use karna:
+let students: string[] = ["Rahul", "Amit", "Priya"];
+
+console.log(students);
+
+
+Output:
+["Rahul", "Amit", "Priya"]
+
+
+Yaad rakhne ka trick: string[] ka matlab hai strings ki list.
+- string[] → strings ki list
+- number[] → numbers ki list
+- boolean[] → true/false ki list
+2. Array se ek value kaise nikalein?
+Har item ka ek index number hota hai. Index hamesha 0 se start hota hai.
+Rahul
+Index: 0
+
+
+Amit
+Index: 1
+
+
+Priya
+Index: 2
+
+
+
+
+let students: string[] = ["Rahul", "Amit", "Priya"];
+
+console.log(students[0]); // Rahul
+console.log(students[1]); // Amit
+console.log(students[2]); // Priya
+
+
+Trick: First item = index 0, second item = index 1.
+3. Array mein naya item add karna
+push() ka use karke end mein naya item add kar sakte hain.
+let fruits: string[] = ["Apple", "Mango"];
+
+fruits.push("Banana");
+
+console.log(fruits);
+
+
+Output:
+["Apple", "Mango", "Banana"]
+
+
+4. Array se last item remove karna
+pop() last item ko remove karta hai.
+let fruits: string[] = ["Apple", "Mango", "Banana"];
+
+fruits.pop();
+
+console.log(fruits);
+
+
+Output:
+["Apple", "Mango"]
+
+
+5. Array ki length check karna
+length batata hai ki array mein kitne items hain.
+let marks: number[] = [80, 90, 75, 95];
+
+console.log(marks.length);
+
+
+Output:
+4
+
+
+Ab tumhari practice 💻
+Task 1 — Array banao
+colors naam ka array banao jisme "Red", "Blue", "Green" ho. Phir "Blue" print karo.
+Apna code yahan likho.
+
+
+Task 2 — Add aur count
+numbers naam ka number array banao jisme 10, 20, 30 hon. push() se 40 add karo aur array ki length print karo.
+
+
+Task 3 — Output batao
+Is code ka output kya hoga?
+let fruits: string[] = ["Apple", "Mango", "Banana"];
+fruits.pop();
+console.log(fruits[1]);
+console.log(fruits.length);
+
+
+
+Check my answers
+Pehle ye tasks complete karo. Main tumhara code line by line check karke bataunga ki kya sahi hai aur kya improve karna hai.
+
+
+
+
+  ----------------------------
+
+  TypeScript Lesson 7: Functions ⚙️
+Ab hum Functions seekhenge. Functions programming ka bahut important concept hai — real projects mein hum baar-baar functions use karte hain.
+1. Function kya hota hai?
+Function ek aisa code block hai jise hum jab chahein call karke chala sakte hain.
+Maan lo tumhe 3 baar greeting print karni hai.
+Bina function ke:
+console.log("Hello Rahul");
+console.log("Hello Rahul");
+console.log("Hello Rahul");
+
+
+Function ke saath:
+function greet() {
+    console.log("Hello Rahul");
+}
+
+greet();
+greet();
+greet();
+
+
+Output:
+Hello Rahul
+Hello Rahul
+Hello Rahul
+
+
+Yaad rakho:
+- function → function banata hai.
+- greet → function ka naam hai.
+- { } → function ka code.
+- greet() → function ko call karta hai.
+Function banana aur usko call karna alag cheezein hain.
+2. Parameters — function ko data dena
+Maan lo har baar alag naam se greeting karni hai.
+function greet(name: string) {
+    console.log("Hello " + name);
+}
+
+greet("Rahul");
+greet("Amit");
+greet("Priya");
+
+
+Output:
+Hello Rahul
+Hello Amit
+Hello Priya
+
+
+Yahan name: string ek parameter hai. "Rahul" ek argument hai jo hum function call karte waqt dete hain.
+Ek aur example:
+function add(a: number, b: number) {
+    console.log(a + b);
+}
+
+add(10, 20);
+add(5, 3);
+
+
+Output:
+30
+8
+
+
+TypeScript mein a aur b dono numbers hone chahiye.
+3. Return — function se result wapas lena
+console.log() sirf value print karta hai. return result ko function se bahar wapas deta hai, jise hum aage use kar sakte hain.
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+let result: number = add(10, 20);
+
+console.log(result);
+console.log(result * 2);
+
+
+Output:
+30
+60
+
+
+Is line ko samjho:
+function add(a: number, b: number): number
+
+
+Aakhri : number ka matlab hai function ek number return karega.
+Memory trick:
+- console.log() = screen par dikhao.
+- return = result wapas do.
+4. Function ka return type void
+Agar function koi result return nahi karta, to hum void use kar sakte hain.
+function sayHello(): void {
+    console.log("Hello!");
+}
+
+sayHello();
+
+
+Yahan void ka matlab hai function se koi useful return value expected nahi hai.
+5. Optional parameter
+Kabhi-kabhi function mein koi argument dena optional hota hai. Parameter ke naam ke baad ? lagate hain.
+function greet(name: string, age?: number): void {
+    console.log("Hello " + name);
+
+    if (age !== undefined) {
+        console.log("Age: " + age);
+    }
+}
+
+greet("Rahul");
+greet("Amit", 25);
+
+
+Output:
+Hello Rahul
+Hello Amit
+Age: 25
+
+
+age? ki wajah se hum age ke saath ya bina age ke function call kar sakte hain.
+
+Ab tumhari practice 💻
+Task 1 — Simple function
+welcome() naam ka function banao jo "Welcome to TypeScript" print kare. Phir function call karo.
+
+
+Task 2 — Parameters aur return
+multiply(a, b) function banao jo do numbers multiply karke result return kare. Phir multiply(4, 5) ka result print karo.
+
+
+Task 3 — Output predict karo
+function square(n: number): number {
+    return n * n;
+}
+
+console.log(square(4));
+console.log(square(5));
+
+
+Iska output kya hoga?
+
+Check my answers
+Inhe solve karne ke baad hum Objects seekhenge, jahan tum ek hi variable mein kisi person ka name, age aur email store karna seekhoge.
+
+
+
+  TypeScript Lesson 8: Objects 🧑‍💻
+Ab hum Objects seekhenge. Real-world applications mein objects bahut use hote hain, jaise user details, employee records, products aur API responses.
+1. Object kya hota hai?
+Maan lo ek student ka naam, age aur marks store karne hain.
+Alag-alag variables se:
+let name: string = "Rahul";
+let age: number = 22;
+let marks: number = 85;
+
+
+Object se hum ye saari details ek jagah rakh sakte hain:
+let student = {
+    name: "Rahul",
+    age: 22,
+    marks: 85
+};
+
+console.log(student);
+
+
+Output:
+{
+  name: "Rahul",
+  age: 22,
+  marks: 85
+}
+
+
+Yaad rakho:
+- Object { } ke andar banta hai.
+- name, age, marks ko properties kehte hain.
+- Har property ke paas ek value hoti hai.
+2. Object ki value access karna
+Do common methods hain.
+Method 1: Dot notation
+let student = {
+    name: "Rahul",
+    age: 22
+};
+
+console.log(student.name);
+console.log(student.age);
+
+
+Output:
+Rahul
+22
+
+
+Method 2: Bracket notation
+console.log(student["name"]);
+console.log(student["age"]);
+
+
+Output same hoga.
+Trick: Normally student.name use karna sabse simple hai.
+3. Object ki value change karna
+let student = {
+    name: "Rahul",
+    age: 22
+};
+
+student.age = 23;
+
+console.log(student.age);
+
+
+Output:
+23
+
+
+let se banaye object ki property change kar sakte ho. const se banaye object ki properties bhi generally change ki ja sakti hain, lekin us variable ko kisi naye object se reassign nahi kar sakte.
+4. TypeScript mein object ka type define karna
+Ab important TypeScript concept dekho.
+let employee: {
+    name: string;
+    age: number;
+    isActive: boolean;
+} = {
+    name: "Amit",
+    age: 25,
+    isActive: true
+};
+
+console.log(employee.name);
+
+
+Yahan humne object ka structure define kiya hai:
+- name string hona chahiye.
+- age number hona chahiye.
+- isActive boolean hona chahiye.
+Agar age: "twenty-five" likhoge, to TypeScript type error dega, kyunki age ke liye number chahiye.
+5. Optional property
+Kabhi-kabhi object ki property hona zaroori nahi hota. Uske liye ? use karte hain.
+let user: {
+    name: string;
+    email?: string;
+} = {
+    name: "Rahul"
+};
+
+console.log(user.name);
+console.log(user.email);
+
+
+Output:
+Rahul
+undefined
+
+
+email? ka matlab email dena optional hai.
+
+Practice time 💻
+Task 1 — Apna object banao
+car naam ka object banao, jisme brand (string), year (number), aur isElectric (boolean) ho. Phir brand print karo.
+
+
+Task 2 — Property update karo
+person naam ka object banao, jisme name: "Amit" aur age: 20 ho. Age ko 21 karo aur updated age print karo.
+
+
+Task 3 — Output batao
+let product = {
+    name: "Laptop",
+    price: 50000
+};
+
+product.price = 45000;
+console.log(product.price);
+
+
+Output kya hoga aur kyun?
+
+Check my answers
+Agla topic hoga Arrays + Objects together, phir hum interface aur type alias jaise TypeScript ke important concepts par jayenge.
+
+
+
+  TypeScript Lesson 9: Array of Objects 🚀
+Ab seekhenge ki ek array ke andar multiple objects kaise store karte hain. Ye real projects mein bahut common hai, jaise employee lists, product lists aur API se aane wala data.
+1. Pehle problem samjho
+Maan lo tumhe 3 employees ki details store karni hain.
+Har employee ke paas name aur age hai.
+let employee1 = {
+    name: "Rahul",
+    age: 25
+};
+
+let employee2 = {
+    name: "Amit",
+    age: 28
+};
+
+let employee3 = {
+    name: "Priya",
+    age: 24
+};
+
+
+Ye kaam karega, lekin employees zyada hue to bahut saare variables banane padenge.
+Better solution: Array of Objects
+let employees = [
+    { name: "Rahul", age: 25 },
+    { name: "Amit", age: 28 },
+    { name: "Priya", age: 24 }
+];
+
+console.log(employees);
+
+
+Ab saare employees ek hi array mein hain.
+2. Kisi specific employee ko access karna
+Yaad rakho: array ka index 0 se start hota hai.
+let employees = [
+    { name: "Rahul", age: 25 },
+    { name: "Amit", age: 28 },
+    { name: "Priya", age: 24 }
+];
+
+console.log(employees[0].name);
+console.log(employees[1].age);
+
+
+Output:
+Rahul
+28
+
+
+Samjho employees[0].name ka matlab:
+- employees[0] → pehla employee
+- .name → us employee ka name
+3. TypeScript mein proper type dena
+Ab hum TypeScript ka type safety feature use karenge.
+let employees: {
+    name: string;
+    age: number;
+}[] = [
+    { name: "Rahul", age: 25 },
+    { name: "Amit", age: 28 }
+];
+
+employees.push({ name: "Priya", age: 24 });
+
+console.log(employees);
+
+
+Yahan:
+- name string hona chahiye.
+- age number hona chahiye.
+- [ ] ka matlab hai aise objects ki array.
+Agar tum ye likhoge:
+employees.push({ name: "Sam", age: "thirty" });
+
+
+TypeScript error dega, kyunki age number hona chahiye, string nahi.
+4. Loop ke saath Array of Objects
+Maan lo saare employees ke names print karne hain.
+let employees: {
+    name: string;
+    age: number;
+}[] = [
+    { name: "Rahul", age: 25 },
+    { name: "Amit", age: 28 },
+    { name: "Priya", age: 24 }
+];
+
+for (const employee of employees) {
+    console.log(employee.name);
+}
+
+
+Output:
+Rahul
+Amit
+Priya
+
+
+for...of har baar array ka ek employee object deta hai.
+
+Practice time 💻
+Task 1 — Product list banao
+products naam ka array banao jisme 2 objects hon. Har object mein name (string) aur price (number) ho. Phir pehle product ka name print karo.
+
+
+Task 2 — Loop lagao
+students array mein 3 students ke name aur marks store karo. for...of loop se sabhi students ke names print karo.
+
+
+Task 3 — Output predict karo
+let users = [
+    { name: "A", age: 20 },
+    { name: "B", age: 30 }
+];
+
+console.log(users[1].name);
+console.log(users[0].age);
+
+
+
+Check my answers
+Next topic: type aur interface — inse hum objects ke reusable structures define karna seekhenge, jo professional TypeScript code mein bahut important hain.
+
+
+
+  TypeScript Lesson 10: type aur interface 🚀
+Aaj hum TypeScript ka ek bahut important concept seekhenge: type aur interface.
+Inka use objects ka structure define karne ke liye hota hai, taaki TypeScript check kar sake ki data sahi format mein hai ya nahi.
+1. Problem samjho
+Maan lo tumhare paas multiple employees hain. Har employee ka name, age aur salary hai.
+let employee1: {
+    name: string;
+    age: number;
+    salary: number;
+} = {
+    name: "Rahul",
+    age: 25,
+    salary: 30000
+};
+
+let employee2: {
+    name: string;
+    age: number;
+    salary: number;
+} = {
+    name: "Priya",
+    age: 27,
+    salary: 40000
+};
+
+
+Dono objects mein same structure baar-baar likhna pad raha hai.
+Solution: type ya interface ka use karo.
+2. type kya hota hai?
+type se hum ek reusable naam bana sakte hain kisi data structure ke liye.
+type Employee = {
+    name: string;
+    age: number;
+    salary: number;
+};
+
+let employee1: Employee = {
+    name: "Rahul",
+    age: 25,
+    salary: 30000
+};
+
+let employee2: Employee = {
+    name: "Priya",
+    age: 27,
+    salary: 40000
+};
+
+
+Ab Employee ka structure sirf ek baar define kiya.
+Samjho:
+- type Employee → structure ka naam banaya.
+- name: string → name string hona chahiye.
+- age: number → age number honi chahiye.
+- employee1: Employee → employee1 ko isi structure ko follow karna hoga.
+Agar salary missing ho, ya age mein string daal do, to TypeScript error dega.
+3. interface kya hota hai?
+interface bhi object ka structure define kar sakta hai.
+interface Employee {
+    name: string;
+    age: number;
+    salary: number;
+}
+
+let employee: Employee = {
+    name: "Amit",
+    age: 24,
+    salary: 35000
+};
+
+console.log(employee.name);
+
+
+Output:
+Amit
+
+
+Yahan interface Employee define karta hai ki Employee object mein kaun-kaun si properties honi chahiye.
+4. type aur interface mein difference
+Feature	type	interface
+Object structure	Yes	Yes
+Reuse kar sakte hain	Yes	Yes
+Union types	Yes	Directly nahi
+Extend karna	Intersection (&) se	extends se
+Same name ko dobara declare karna	Generally nahi	Haan, declarations merge ho sakti hain
+Beginner level par object structures ke liye dono useful hain. Har situation mein ek hi winner nahi hota.
+5. Interface ko extend karna
+Maan lo normal employee aur manager dono hain. Manager ke paas employee wali properties ke saath teamSize bhi hai.
+interface Employee {
+    name: string;
+    salary: number;
+}
+
+interface Manager extends Employee {
+    teamSize: number;
+}
+
+let manager: Manager = {
+    name: "Rahul",
+    salary: 60000,
+    teamSize: 5
+};
+
+console.log(manager.name);
+console.log(manager.teamSize);
+
+
+Output:
+Rahul
+5
+
+
+extends Employee ka matlab hai Manager ko Employee ki properties bhi milengi, aur woh apni extra property bhi define kar sakta hai.
+6. Bonus: type ke saath union
+type sirf objects ke liye nahi hota. Isse possible values bhi restrict kar sakte hain.
+type Status = "pending" | "approved" | "rejected";
+
+let applicationStatus: Status = "pending";
+
+applicationStatus = "approved";
+
+
+Ye valid hai. Lekin:
+applicationStatus = "completed";
+
+
+TypeScript error dega, kyunki "completed" allowed values mein nahi hai.
+Memory trick:
+- type → object structure ke saath unions jaise types bhi bana sakta hai.
+- interface → objects ka contract define karne ke liye bahut common hai.
+
+Practice time 💻
+Task 1 — type banao
+Product naam ka type define karo jisme name: string, price: number, aur inStock: boolean ho. Phir ek product object banao.
+
+
+Task 2 — interface aur extends
+Person interface banao jisme name: string ho. Phir Student interface ko Person se extend karo aur usmein marks: number add karo. Ek Student object banao.
+
+
+Task 3 — Output ya error?
+type Role = "admin" | "user";
+
+let role: Role = "admin";
+role = "user";
+role = "manager";
+
+
+Batao: kaunsi lines valid hain aur kaunsi line TypeScript error degi?
+
+Check my answers
+Agla topic hoga Union Types aur Type Narrowing — jahan ek variable multiple types accept kar sakta hai, aur hum safely check karna seekhenge ki usmein kis type ka data hai.
+
+
+
+
+
+
+
+
+
