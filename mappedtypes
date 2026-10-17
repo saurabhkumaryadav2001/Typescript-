@@ -1,0 +1,108 @@
+Chalo! 🚀 TypeScript ka Lesson 29: Mapped Types start karte hain. Ye advanced TypeScript ka important concept hai.
+Lesson 29 — Mapped Types
+1. Mapped Types kya hote hain?
+Maan lo tumhare paas ek type hai:
+type User = {
+  name: string;
+  age: number;
+  email: string;
+};
+
+
+Ab tum chahte ho ki User ki saari properties optional ho jaayein.
+Ek-ek property dobara likhne ke bajay, TypeScript automatically sab properties transform kar sakta hai. Isi ko Mapped Type kehte hain.
+2. Pehla example
+type MyPartial<T> = {
+  [K in keyof T]?: T[K];
+};
+
+
+Isko simple language mein samjho:
+- T — original type.
+- keyof T — original type ki saari keys.
+- K in keyof T — har key par ek-ek karke loop.
+- ? — property optional kar do.
+- T[K] — us property ka original type.
+Ab ise use karo:
+type User = {
+  name: string;
+  age: number;
+};
+
+type OptionalUser = MyPartial<User>;
+
+const user: OptionalUser = {
+  name: "Rahul"
+};
+
+
+Ye valid hai, kyunki age optional ho gaya.
+3. Saari properties readonly banana
+type MyReadonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+type Product = {
+  name: string;
+  price: number;
+};
+
+const product: MyReadonly<Product> = {
+  name: "Laptop",
+  price: 50000
+};
+
+// product.price = 40000; // Error
+
+
+readonly har property par automatically apply ho gaya.
+4. Saari properties ka type badalna
+Maan lo har property ka value string banana hai:
+type StringValues<T> = {
+  [K in keyof T]: string;
+};
+
+type Employee = {
+  name: string;
+  age: number;
+  active: boolean;
+};
+
+type EmployeeStrings = StringValues<Employee>;
+
+
+Ab EmployeeStrings ka result hoga:
+type EmployeeStrings = {
+  name: string;
+  age: string;
+  active: string;
+};
+
+
+Notice karo: original type mein age number tha aur active boolean tha, lekin mapped type ne sabko string bana diya.
+5. Quick revision
+Syntax	Meaning
+keyof T	Type ki keys
+[K in keyof T]	Har key par iterate karna
+?	Property optional
+readonly	Property reassignment rokna
+T[K]	Key ka original value type
+Practice time 💻
+Task 1: Ek MyReadonly<T> mapped type banao jo kisi bhi type ki saari properties readonly kar de.
+Task 2: Is code mein EmployeeResult ka type kya banega?
+type Employee = {
+  name: string;
+  salary: number;
+};
+
+type MakeOptional<T> = {
+  [K in keyof T]?: T[K];
+};
+
+type EmployeeResult = MakeOptional<Employee>;
+
+
+
+Check my answers
+Next lesson (30): Conditional Types — T extends U ? X : Y, jisse types ke basis par conditions laga sakte hain.
+
