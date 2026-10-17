@@ -1,0 +1,116 @@
+Promise.all() in TypeScript 🚀
+Pichhle lesson mein humne Promise aur async/await seekha. Ab seekhenge ki multiple asynchronous tasks ko ek saath kaise run karte hain.
+1. Problem samjho
+Maan lo tumhe 3 APIs se data lena hai:
+- Users API
+- Products API
+- Orders API
+Agar ek-ek karke await karoge:
+const users = await getUsers();
+const products = await getProducts();
+const orders = await getOrders();
+
+
+Toh har call agle call se pehle complete hogi. Agar har API ko 2 seconds lagen, toh total lagbhag 6 seconds lag sakte hain.
+2. Promise.all() use karo
+async function main() {
+  const [users, products, orders] = await Promise.all([
+    getUsers(),
+    getProducts(),
+    getOrders()
+  ]);
+
+  console.log(users);
+  console.log(products);
+  console.log(orders);
+}
+
+
+Ye calls ek saath start hoti hain. Agar teeno ko 2 seconds lagen, toh total time lagbhag 2 seconds ho sakta hai, na ki 6 seconds.
+Execution ka difference
+Sequential — ek ke baad ek
+Users
+
+Products
+
+Orders
+
+
+Parallel start — Promise.all()
+Users
+
+
+Products
+
+
+Orders
+
+
+
+Conceptual illustration: actual duration network aur server par depend karti hai.
+3. Complete runnable example
+function getUsers(): Promise<string[]> {
+  return Promise.resolve(["Rahul", "Priya"]);
+}
+
+function getProducts(): Promise<string[]> {
+  return Promise.resolve(["Laptop", "Phone"]);
+}
+
+async function main(): Promise<void> {
+  const [users, products] = await Promise.all([
+    getUsers(),
+    getProducts()
+  ]);
+
+  console.log(users);
+  console.log(products);
+}
+
+main();
+
+
+Output:
+["Rahul", "Priya"]
+["Laptop", "Phone"]
+
+
+Yahan Promise.resolve() already completed Promise return karta hai. Ye example concept samjhane ke liye hai; real API calls mein network ka wait ho sakta hai.
+4. Ek important baat: Error handling
+Agar Promise.all() mein koi ek Promise reject ho jaye, toh Promise.all() ka returned Promise reject ho jata hai.
+async function main(): Promise<void> {
+  try {
+    const results = await Promise.all([
+      getUsers(),
+      getProducts()
+    ]);
+
+    console.log(results);
+  } catch (error: unknown) {
+    console.log("Koi task fail ho gaya");
+  }
+}
+
+
+Agar tumhe chahiye ki har task ka success/failure alag se mile, toh Promise.allSettled() useful hota hai.
+5. Promise.all() vs Promise.allSettled()
+Feature	Promise.all()	Promise.allSettled()
+Sab successful	Saare results milte hain	Saare status milte hain
+Ek fail hua	Returned Promise reject	Baaki results ka wait bhi karta hai
+Best use	Sab results zaroori hain	Har task ka outcome chahiye
+Practice time 💻
+Ye code dekho:
+const result = await Promise.all([
+  Promise.resolve(10),
+  Promise.resolve(20),
+  Promise.resolve(30)
+]);
+
+console.log(result);
+
+
+Question 1: Output kya hoga?
+Question 2: Agar second Promise reject ho jaye, toh Promise.all() ka kya hoga?
+
+Check answers
+Next lesson (26): Promise.race(), Promise.any() aur Promise.allSettled() — asynchronous operations ko aur achhe se control karna.
