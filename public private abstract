@@ -1,0 +1,119 @@
+TypeScript Lesson 16: public, private, protected & abstract 🔐
+Aaj hum seekhenge ki class ke data ko control kaise karte hain aur abstract class ka use karke common structure kaise banate hain.
+1. public — sab jagah access
+public property ko class ke bahar se bhi access kar sakte hain. TypeScript mein class members default se public hote hain.
+class Employee {
+    public name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+const emp = new Employee("Rahul");
+
+console.log(emp.name); // Rahul
+emp.name = "Amit";     // Allowed
+console.log(emp.name); // Amit
+
+
+2. private — sirf class ke andar
+Maan lo bank account ka balance har jagah directly change nahi hona chahiye.
+class BankAccount {
+    private balance: number = 1000;
+
+    showBalance(): void {
+        console.log(this.balance);
+    }
+}
+
+const account = new BankAccount();
+
+account.showBalance(); // 1000
+
+// account.balance = 5000; // TypeScript error
+
+
+balance ko class ke bahar directly access nahi kar sakte, lekin class ka apna method use kar sakta hai.
+3. protected — parent aur child class
+protected member ko us class ke andar aur uski child classes mein access kar sakte hain, lekin class ke bahar directly nahi.
+class Animal {
+    protected name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+class Dog extends Animal {
+    showName(): void {
+        console.log(this.name);
+    }
+}
+
+const dog = new Dog("Tommy");
+
+dog.showName(); // Tommy
+
+// console.log(dog.name); // TypeScript error
+
+
+Yaad rakhne ka shortcut:
+Modifier	Class ke andar	Child class	Bahar se
+public	Yes	Yes	Yes
+protected	Yes	Yes	No
+private	Yes	No, directly nahi	No
+Ye TypeScript ke private aur protected access rules hain.
+4. abstract class kya hoti hai?
+Abstract class ek base design hoti hai. Isse directly object nahi bana sakte; doosri class ise extend karke implement karti hai.
+Maan lo har shape ka area hota hai, lekin circle aur rectangle ka area calculate karne ka formula alag hai.
+abstract class Shape {
+    abstract area(): number;
+
+    showArea(): void {
+        console.log("Area:", this.area());
+    }
+}
+
+class Rectangle extends Shape {
+    constructor(
+        private length: number,
+        private width: number
+    ) {
+        super();
+    }
+
+    override area(): number {
+        return this.length * this.width;
+    }
+}
+
+const rectangle = new Rectangle(10, 5);
+
+rectangle.showArea(); // Area: 50
+
+
+Samjho:
+- abstract class Shape — base class, iska direct object nahi bana sakte.
+- abstract area(): number — child class ko area() implement karna hoga.
+- extends Shape — Rectangle, Shape ko inherit karta hai.
+- super() — parent constructor call karta hai.
+- override area() — Rectangle apna area formula define karta hai.
+Agar Rectangle ne area() implement nahi kiya, to TypeScript error dega.
+
+Practice time 💻
+Task 1 — Private property
+User class banao jisme private password: string ho. Constructor se password set karo aur class ke andar checkPassword() method se usko print karo. Class ke bahar password access karne ki koshish bhi dikhao, comment ke saath.
+
+
+Task 2 — Abstract class
+abstract class Animal banao jisme abstract sound(): void ho. Dog class ise extend kare aur sound() mein "Woof" print kare.
+
+
+Task 3 — Concept check
+Batao:
+- Kaunsa modifier child class ko access deta hai, par bahar se access nahi deta?
+- Kya abstract class ka direct object bana sakte hain?
+
+Check my answers
+Next topic: TypeScript ke Utility Types — Partial, Pick, Omit aur Record. Ye existing types se naye types banane mein kaam aate hain.
