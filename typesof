@@ -1,0 +1,74 @@
+Lesson 18: keyof aur typeof
+1. keyof kya karta hai?
+Maan lo ek object ka type hai:
+type User = {
+  name: string;
+  age: number;
+  city: string;
+};
+
+type UserKeys = keyof User;
+
+
+Ab UserKeys ki value-type hogi:
+"name" | "age" | "city"
+
+
+Matlab keyof object ki saari property keys ka union type bana deta hai.
+2. typeof kya karta hai?
+const user = {
+  name: "Rahul",
+  age: 25
+};
+
+type User = typeof user;
+
+
+Yahan TypeScript user variable ko dekhkar uska type bana dega:
+{
+  name: string;
+  age: number;
+}
+
+
+Yaad rakhne ka trick:
+- keyof → object ki keys nikalo.
+- typeof → variable ka type nikalo.
+3. Dono ko saath mein use karna
+const config = {
+  apiUrl: "https://example.com",
+  timeout: 5000
+};
+
+type ConfigKeys = keyof typeof config;
+
+
+ConfigKeys banega:
+"apiUrl" | "timeout"
+
+
+Pehle typeof config object ka type nikalta hai, phir keyof uski keys nikalta hai.
+Practice time 💻
+Task 1: Is code mein ProductKeys ka type kya hoga?
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+};
+
+type ProductKeys = keyof Product;
+
+
+
+Task 2: Is code mein SettingsKeys ka type kya hoga?
+const settings = {
+  theme: "dark",
+  fontSize: 16
+};
+
+type SettingsKeys = keyof typeof settings;
+
+
+
+Check my answers
+Iske baad hum Lesson 19: Type Guards padhenge, jisse TypeScript ko samjha sakte hain ki kisi value ka actual type kya hai.
